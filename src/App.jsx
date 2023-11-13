@@ -21,8 +21,6 @@ function App() {
     },
   });
 
-  console.log("isAuthenticationFetched", isAuthenticationFetched)
-
   return (
     <ThemeProvider theme={customTheme}>
         {!isAuthenticationFetched ? (
