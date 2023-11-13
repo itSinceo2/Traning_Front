@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { logout } from '../../Stores/AccessTokenStore';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -20,6 +21,7 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+ 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -34,6 +36,26 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleSettingsClick = (setting) => {
+    switch (setting) {
+      case 'Profile':
+        // Lógica para la opción 'Profile'
+        break;
+      case 'Account':
+        // Lógica para la opción 'Account'
+        break;
+      case 'Dashboard':
+        // Lógica para la opción 'Dashboard'
+        break;
+      case 'Logout':
+        // Lógica para la opción 'Logout'
+        logout();
+        break;
+      default:
+        break;
+    }
+  }
 
   return (
     <AppBar position="static">
@@ -148,7 +170,7 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleSettingsClick(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
