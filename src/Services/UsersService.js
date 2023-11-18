@@ -2,6 +2,7 @@ import createHttp from './BaseService';
 
 const http = createHttp(true);
 
+export const registerUser = (user) => http.post('/users/register', user);
 export const getCurrentUser = () => http.get('/users/me');
 
 export const getUsersList = () => http.get('/users');

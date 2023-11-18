@@ -8,7 +8,6 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { logout } from '../../Stores/AccessTokenStore';
@@ -157,16 +156,18 @@ function Navbar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Button
+              <Link
+              href={method}
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={(event) => handleRoute(event)}
+                sx={{ my: 2, color: 'white', display: 'block', marginLeft: 2 }}
               >
                 {page}
-              </Button>
+              </Link>
             ))}
           </Box>
 
+        {/* AVATAR */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
