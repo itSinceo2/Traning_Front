@@ -43,13 +43,13 @@ function Navbar() {
     console.log(event.target.innerText)
     switch (event.target.innerText) {
       case 'Clientes':
-        setMethod('Clients')
+        setMethod('clients')
         break;
       case 'Cursos':
-        setMethod('Courses')
+        setMethod('courses')
         break;
       case 'Usuarios':
-        setMethod('Users')
+        setMethod('users')
         break;
       default:
         break;
