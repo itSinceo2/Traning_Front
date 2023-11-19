@@ -22,8 +22,7 @@ const CourseCard =({course}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button >Ir al curso</Button>
       </CardActions>
     </Card>
   );
