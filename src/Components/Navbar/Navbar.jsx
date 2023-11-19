@@ -12,6 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { logout } from '../../Stores/AccessTokenStore';
 import { Link } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 
 
@@ -21,7 +22,8 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [method, setMethod] = React.useState('');
+  const [method] = React.useState('');
+  const navigate = useNavigate();
 
  
   const handleOpenNavMenu = (event) => {
@@ -43,19 +45,24 @@ function Navbar() {
     console.log(event.target.innerText)
     switch (event.target.innerText) {
       case 'Clientes':
-        setMethod('clients')
+        handleRouteClick('Clients')
         break;
       case 'Cursos':
-        setMethod('courses')
+        handleRouteClick('Courses')
         break;
       case 'Usuarios':
-        setMethod('users')
+        handleRouteClick('Users')
         break;
       default:
         break;
     }
   }
 
+  const handleRouteClick = (page) => {
+    //navegar a la ruta `/${page.toLowerCase()}`
+    navigate(`/${page.toLowerCase()}`);
+  }
+  
   const handleSettingsClick = (setting) => {
     switch (setting) {
       case 'Profile':
