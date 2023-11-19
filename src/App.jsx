@@ -7,6 +7,7 @@ import { useAuthContext } from './Contexts/AuthContext'
 import ProtectedRoute from './Components/ProtectedRoutes/ProtectedRoute'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Clients from './Views/Clients/Clients'
+import ClientsForm from './Views/Clients/ClientsForm'
 import Courses from './Views/Courses/Courses'
 import Users from './Views/Users/Users'
 
@@ -33,7 +34,12 @@ function App() {
             <Routes>
           <Route path="/" element={<ProtectedRoute />}>
             <Route path="/home" element={<Home />} />
+            {/* Clients */}
             <Route path="/clients" element={<Clients />} />
+            <Route path="/clients/new" element={<ClientsForm />} />
+
+
+
             <Route path="/courses" element={<Courses />} />
             <Route path="/users" element={<Users />} />
           </Route>

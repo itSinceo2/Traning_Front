@@ -30,7 +30,7 @@ const Search = ({ options, searchLabel, labelProp, onSearch }) => {
       sx={{ width: 300, color: 'black' }}
       getOptionLabel={(option) => option[labelProp]}
       onChange={(event, value) => handleSearch(event, value)}
-      renderInput={(params) => <TextField {...params} label={searchLabel} />}
+      renderInput={(params) => <TextField {...params} label={searchLabel} sx={{ marginY: 2 }} />}
       clearOnBlur={false}
     />
   );
