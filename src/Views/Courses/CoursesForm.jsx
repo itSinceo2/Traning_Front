@@ -77,7 +77,7 @@ const CoursesForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{maxWidth:"80vh"}} encType="multipart/form-data">
+        <form onSubmit={handleSubmit} style={{ maxWidth: "80vh" }} encType="multipart/form-data">
             <Box sx={{ margin: 2 }}>
                 <Typography variant="h3">Courses Form</Typography>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -88,7 +88,9 @@ const CoursesForm = () => {
                         label="Name"
                         variant="outlined"
                     />
-                    <TextField
+                    <TextareaAutosize
+                        minRows={3}
+                        maxRows={10}
                         name="description"
                         onChange={handleInputChange}
                         id="outlined-basic"
