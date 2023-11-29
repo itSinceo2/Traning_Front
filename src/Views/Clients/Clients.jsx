@@ -22,6 +22,7 @@ const Clients = () => {
     !clients ? 
     <Box>Loading...</Box>
     :
+
     <Box className="Clients" sx={{ marginX: 2 }}>
       <Typography variant="h3" >Clientes</Typography >
       <Box sx={{display:'flex', justifyContent:'space-between'}}>
