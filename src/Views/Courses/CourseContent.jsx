@@ -1,43 +1,55 @@
 import { Box, Button, TextField, TextareaAutosize } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { styled } from "@mui/material/styles";
+
+const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+});
 
 
-const CourseContent = ({ handleInputChange, CloudUploadIcon, VisuallyHiddenInput, handleFileChange, theme, index }) => {
+const CourseContent = ({ content, onChange, i, updatingCourse }) => {
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%', marginTop:2 }}>
             <TextField
-                name={`content[${index}].title`}
-                onChange={(e) => handleInputChange(e, index)}
+                name='title'
+                onChange={(event) => onChange(event, content, i)}
                 id="outlined-basic"
-                label="Titulo"
+                label="Titulo de seccion"
                 variant="outlined"
                 sx={{ width: '100%' }}
+                onBlur={updatingCourse}
             />
             <TextareaAutosize
                 minRows={3}
                 maxRows={10}
-                name={`content[${index}].description`}
-                onChange={(e) => handleInputChange(e, index)}
+                name='description'
+                onChange={(event) => onChange(event, content, i)}
                 id="outlined-basic"
                 label="Descripción"
                 variant="outlined"
                 aria-label="Textarea"
-                placeholder="Descripción del curso"
+                placeholder="Descripción de la seccion"
                 style={{ width: "100%", fontFamily: "Roboto" }}
+                onBlur={updatingCourse}
             />
             <Button
                 component="label"
                 variant="contained"
                 startIcon={<CloudUploadIcon />}
-                sx={{ width: '100%', color: theme.palette.primary.main, backgroundColor: theme.palette.secondary.main }}
+                onBlur={updatingCourse}
             >
                 Imagen de seccion
                 <VisuallyHiddenInput
-                    onChange={(e) => handleFileChange({
-                        target: {
-                            files: e.target.files,
-                        },
-                    })}
-                    name={`content[${index}].image`}
+                    onChange={(event) => onChange(event, content, i)}
+                    name='image'
                     type="file"
                     multiple
                 />

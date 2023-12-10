@@ -10,8 +10,8 @@ const CourseCard =({course}) => {
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image="course.image"
-        title="course.title"
+        image={course.mainImage}
+        title={course.title}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -22,7 +22,7 @@ const CourseCard =({course}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button >Ir al curso</Button>
+        <Button href={`/course/detail/${course.id}`} >Ir al curso</Button>
       </CardActions>
     </Card>
   );

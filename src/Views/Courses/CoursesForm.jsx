@@ -4,8 +4,8 @@ import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { createCourse } from "../../Services/CoursesService";
-import CourseContent from "./CourseContent";
 import { useTheme } from "@mui/system";
+
 
 const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -32,72 +32,42 @@ const CoursesForm = () => {
     const handleFileChange = (event) => {
         setCourse({
             ...course,
-            mainImage: event.target.files,
+            [event.target.name]: event.target.files[0],
         });
     };
 
-    const handleInputChange = (event, index) => {
-        const { name, value } = event.target;
-        console.log(name, value);
-
-        if (name.substring(0, 7) === "content") {
-            const contentProperty = name.substring(11, name.length)
-            console.log(contentProperty);
-
-
-            const contentArray = [...course.content];
-            contentArray[index] = {
-                ...contentArray[index],
-                [contentProperty]: value,
-            };
-            setCourse({
-                ...course,
-                content: contentArray,
-            });
-        } else {
-            setCourse({
-                ...course,
-                [name]: value,
-            });
-        }
+    const handleInputChange = (event) => {
+        setCourse({
+            ...course,
+            [event.target.name]: event.target.value,
+        });
     };
 
 
     const handleSubmit = (event) => {
-        console.log(course);
         event.preventDefault();
 
         const formData = new FormData();
         formData.append("name", course.name);
         formData.append("description", course.description);
-
-        // Asegúrate de agregar correctamente mainImage al formData
         formData.append("mainImage", course.mainImage);
 
-        // Convert content array to JSON and append to formData
-        formData.append("content", JSON.stringify(course.content));
-
         createCourse(formData)
-            .then(() => {
-                navigate("/courses");
+            .then((response) => {
+                console.log(response)
+                navigate(`/course/content/${response.id}`);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.error(error);
+            });
     };
 
 
-    const addContent = () => {
-        setCourse({
-            ...course,
-            content: [
-                ...course.content,
-                { title: "", description: "", image: "" }
-            ],
-        });
-    };
+
 
 
     return (
-        <form onSubmit={handleSubmit} style={{ maxWidth: "80vh" }} encType="multipart/form-data">
+        <form onSubmit={handleSubmit} style={{ maxWidth: "80vh" }} encType="multipart/form-data" multiple={true}>
             <Box sx={{ margin: 2, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                 <Typography variant="h3">Courses Form</Typography>
 
@@ -126,33 +96,17 @@ const CoursesForm = () => {
                     >
                         Imagen de portada
                         <VisuallyHiddenInput
-                            onChange={(e) => handleFileChange({
+                            onChange={(e) => handleFileChange(e, {
                                 target: {
                                     files: e.target.files,
                                 },
                             })}
-                            name="content.image"
+                            name="mainImage"
                             type="file"
                             multiple />
                     </Button>
 
-                    {course.content.map((content, index) => (
-                        <CourseContent
-                            key={index}
-                            index={index}
-                            contentName={content}
-                            handleInputChange={(e) => handleInputChange(e, index)}
-                            CloudUploadIcon={CloudUploadIcon}
-                            VisuallyHiddenInput={VisuallyHiddenInput}
-                            handleFileChange={(e) => handleFileChange(e, index)}
-                            theme={theme}
-                        />
-                    ))}
 
-
-                    <Button variant="contained" color="success" onClick={addContent}>
-                        Agregar Contenido
-                    </Button>
                     <Button type="submit" variant="contained" color="primary">
                         CREAR
                     </Button>

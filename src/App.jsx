@@ -11,6 +11,8 @@ import ClientsForm from './Views/Clients/ClientsForm'
 import Courses from './Views/Courses/Courses'
 import Users from './Views/Users/Users'
 import CoursesForm from './Views/Courses/CoursesForm'
+import CoursesFormContent from './Views/Courses/CoursesFormContent'
+import CourseDetail from './Views/Courses/CourseDetail'
 
 
 
@@ -46,6 +48,8 @@ function App() {
             {/* Courses */}
             <Route path="/courses" element={<Courses />} />
             <Route path="/course/new" element={<CoursesForm />} />
+            <Route path="/course/detail/:id" element={<CourseDetail />} />
+            <Route path="/course/content/:id" element={<CoursesFormContent />} />
 
 
 
