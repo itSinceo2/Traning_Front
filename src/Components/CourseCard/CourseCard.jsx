@@ -23,6 +23,7 @@ const CourseCard =({course}) => {
       </CardContent>
       <CardActions>
         <Button href={`/course/detail/${course.id}`} >Ir al curso</Button>
+        <Button href={`/course/content/${course.id}`} >Editar curso</Button>
       </CardActions>
     </Card>
   );
