@@ -6,8 +6,6 @@ import { CardMedia } from '@mui/material';
 
 const CourseHeader = ( {title, description, image}) => {
 
-    console.log(`title: ${title}, description: ${description}, image: ${image}`)
-
   return (
     <Card sx={{ display: 'flex', alignItems:'center', justifyContent:'center', marginY:2, padding:1 }}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>

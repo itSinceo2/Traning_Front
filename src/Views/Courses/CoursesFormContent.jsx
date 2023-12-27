@@ -1,9 +1,10 @@
 import { useParams } from "react-router"
 import { getCourseDetail, updateCourse } from "../../Services/CoursesService";
 import { useEffect, useState } from "react";
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
 import CourseContent from "./CourseContent";
 import CourseHeader from "../../Components/CourseHeader/CourseHeader";
+import EditableTag from "../../Components/EditableTag/EditableTag";
 
 
 const CoursesFormContent = () => {
@@ -60,6 +61,24 @@ const CoursesFormContent = () => {
         });
     }
 
+    const editTag = (e, index) => {
+
+        const { name, value } = e.target;
+        const newContent = [...course.content];
+        newContent[index][name] = value;
+        setCourse({
+            ...course,
+            content: newContent
+        })
+        updateCourse(id, { content: newContent })
+            .then((data) => {
+                console.log(data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     if (!course.mainImage) {
         return <div>Loading...</div>;
     }
@@ -76,12 +95,25 @@ const CoursesFormContent = () => {
                     />
                 </Box >
                 <Divider orientation='horizontal' flexItem />
-                <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center' }}>
                     {course.content?.map((content, index) => (
                         <Box key={index} sx={{ marginBottom: 3 }}>
-                            <Typography variant="h5" sx={{ marginBottom: 1 }}>{content.title}</Typography>
-                            <Typography variant="body1" sx={{ marginBottom: 1 }}>{content.description}</Typography>
-                            <img src={content.image} alt={content.title} />
+                            <EditableTag 
+                                index={index}
+                                name="title"
+                                sx={{ marginBottom: 1 }}
+                                typeOfTag={"h5"}
+                                initialValue={content.title}
+                                onUpdate={editTag}
+                            />
+                            <EditableTag 
+                                name="description"
+                                sx={{ marginBottom: 1 }}
+                                typeOfTag={"body1"}
+                                initialValue={content.description}
+                                onUpdate={(value) => console.log(value)}
+                            />
+                            {/* <img src={content.image} alt={content.title} /> */}
                         </Box>
                     ))}
                 </Box>
