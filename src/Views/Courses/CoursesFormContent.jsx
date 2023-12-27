@@ -33,11 +33,24 @@ const CoursesFormContent = () => {
     }
         , [id]);
 
-    const addContent = () => {
-    
-        
-        updateCourseContent(id, contentList)
+    console.log(contentList)
+
+    const addContent = (e) => {
+
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("title", contentList.title);
+        formData.append("description", contentList.description);
+        formData.append("image", contentList.image instanceof File ? contentList.image : undefined);
+
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+
+        updateCourseContent(id, formData, { headers: { "Content-Type": "multipart/form-data" } })
             .then((data) => {
+                console.log(data)
                 setCourse(data)
             })
             .catch((error) => {
@@ -45,13 +58,23 @@ const CoursesFormContent = () => {
             });
     }
 
-    const handleAddContent = (event) => {
-        const { name, value } = event.target;
-        setContentList({
-            ...contentList,
-            [name]: value,
-        });
-    }
+const handleAddContent = (event) => {
+    const { name, value, files } = event.target;
+
+    console.log("Name:", name);
+    console.log("Value:", value);
+    console.log("Files:", files);
+
+    name === "image" ?
+    setContentList({
+        ...contentList,
+        [name]: files[0],
+    }) :
+    setContentList({
+        ...contentList,
+        [name]: value,
+    });
+};
 
     const editTag = (e, index) => {
 
@@ -75,7 +98,7 @@ const CoursesFormContent = () => {
         return <div>Loading...</div>;
     }
     else {
-       
+
 
         return (
             <Box sx={{ margin: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -90,7 +113,7 @@ const CoursesFormContent = () => {
                 <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center' }}>
                     {course.content?.map((content, index) => (
                         <Box key={index} sx={{ marginBottom: 3 }}>
-                            <EditableTag 
+                            <EditableTag
                                 index={index}
                                 name="title"
                                 sx={{ marginBottom: 1 }}
@@ -98,7 +121,7 @@ const CoursesFormContent = () => {
                                 initialValue={content.title}
                                 onUpdate={editTag}
                             />
-                            <EditableTag 
+                            <EditableTag
                                 name="description"
                                 sx={{ marginBottom: 1 }}
                                 typeOfTag={"body1"}
@@ -116,14 +139,15 @@ const CoursesFormContent = () => {
                     ))}
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between', alignItems: 'center' }}>
-                <form encType="multipart/form-data">
-                    <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between' }}>
-                                <CourseContent
-                                    key={course.content.length}
-                                    onChange={handleAddContent}
-                                />
-                    </Box>
-                    <Button onClick={(e) => addContent(e)} variant="contained" color="primary" sx={{ marginY: 2 }}>Agregar Sección</Button>
+
+                    <form action="submit"  encType="multipart/form-data" >
+                        <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between' }}>
+                            <CourseContent
+                                key={course.content.length}
+                                onChange={handleAddContent}
+                            />
+                        </Box>
+                        <Button type="submit" onClick={(e) => addContent(e)} variant="contained" color="primary" sx={{ marginY: 2 }}>Agregar Sección</Button>
                     </form>
                 </Box>
             </Box>
