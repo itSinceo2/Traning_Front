@@ -30,7 +30,7 @@ const CoursesFormContent = () => {
                 console.log(error);
             });
     }
-        , []);
+        , [id]);
 
     const addContent = () => {
         console.log(contentList)

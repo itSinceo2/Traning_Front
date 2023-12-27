@@ -16,7 +16,7 @@ const CourseDetail = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [id]);
     
     return (
         <Box className="container" sx={{marginTop:4}}>
