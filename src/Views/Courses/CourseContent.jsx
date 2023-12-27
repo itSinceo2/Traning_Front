@@ -15,40 +15,37 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 
-const CourseContent = ({ content, onChange, i, updatingCourse }) => {
+const CourseContent = ({  onChange }) => {
     return (
         <Box sx={{ width: '100%', marginTop:2 }}>
             <TextField
                 name='title'
-                onChange={(event) => onChange(event, content, i)}
+                onChange={(event) => onChange(event)}
                 id="outlined-basic"
                 label="Titulo de seccion"
                 variant="outlined"
                 sx={{ width: '100%' }}
-                onBlur={updatingCourse}
             />
             <TextareaAutosize
                 minRows={3}
                 maxRows={10}
                 name='description'
-                onChange={(event) => onChange(event, content, i)}
+                onChange={(event) => onChange(event)}
                 id="outlined-basic"
                 label="Descripción"
                 variant="outlined"
                 aria-label="Textarea"
                 placeholder="Descripción de la seccion"
                 style={{ width: "100%", fontFamily: "Roboto" }}
-                onBlur={updatingCourse}
             />
             <Button
                 component="label"
                 variant="contained"
                 startIcon={<CloudUploadIcon />}
-                onBlur={updatingCourse}
             >
                 Imagen de seccion
                 <VisuallyHiddenInput
-                    onChange={(event) => onChange(event, content, i)}
+                    onChange={(event) => onChange(event)}
                     name='image'
                     type="file"
                     multiple

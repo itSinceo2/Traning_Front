@@ -32,31 +32,17 @@ const CoursesFormContent = () => {
         , []);
 
     const addContent = () => {
+        console.log(contentList)
         const content = {
-            title: "",
-            description: "",
-            image: null
+            title: contentList.title,
+            description: contentList.description,
+            image: contentList.image,
         }
-        setContentList([...contentList, content])
-
-    }
-
-
-    const handleContentChange = (event, content, i) => {
-        course.content[i] = event.target.value
-        const newContentList = [...contentList]
-        setContentList(newContentList)
         setCourse({
             ...course,
-            content: newContentList
+            content: [...course.content, content]
         })
-        console.log(course)
-
-    }
-
-
-    const updatingCourse = () => {
-        updateCourse(id, course)
+        updateCourse(id, { content: contentList })
             .then((data) => {
                 console.log(data)
             })
@@ -65,6 +51,14 @@ const CoursesFormContent = () => {
             });
     }
 
+    const handleAddContent = (event) => {
+        const { name, value } = event.target;
+        console.log(name, value)
+        setContentList({
+            ...contentList,
+            [name]: value,
+        });
+    }
 
     if (!course.mainImage) {
         return <div>Loading...</div>;
@@ -93,17 +87,10 @@ const CoursesFormContent = () => {
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between', alignItems: 'center' }}>
                     <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between' }}>
-                        {
-                            contentList.map((content, index) => (
                                 <CourseContent
-                                    key={course.content.length + index}
-                                    content={content}
-                                    i={index}
-                                    onChange={handleContentChange}
-                                    updatingCourse={updatingCourse}
+                                    key={course.content.length}
+                                    onChange={handleAddContent}
                                 />
-                            ))
-                        }
                     </Box>
                     <Button onClick={(e) => addContent(e)} variant="contained" color="primary" sx={{ marginY: 2 }}>Agregar Sección</Button>
                 </Box>
