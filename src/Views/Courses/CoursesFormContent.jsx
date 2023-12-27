@@ -1,10 +1,11 @@
 import { useParams } from "react-router"
-import { getCourseDetail, updateCourse } from "../../Services/CoursesService";
+import { getCourseDetail, updateCourse, updateCourseContent } from "../../Services/CoursesService";
 import { useEffect, useState } from "react";
 import { Box, Button, Divider } from "@mui/material";
 import CourseContent from "./CourseContent";
 import CourseHeader from "../../Components/CourseHeader/CourseHeader";
 import EditableTag from "../../Components/EditableTag/EditableTag";
+
 
 
 const CoursesFormContent = () => {
@@ -30,22 +31,14 @@ const CoursesFormContent = () => {
                 console.log(error);
             });
     }
-        , [id]);
+        , []);
 
     const addContent = () => {
-        console.log(contentList)
-        const content = {
-            title: contentList.title,
-            description: contentList.description,
-            image: contentList.image,
-        }
-        setCourse({
-            ...course,
-            content: [...course.content, content]
-        })
-        updateCourse(id, { content: contentList })
+    
+        
+        updateCourseContent(id, contentList)
             .then((data) => {
-                console.log(data)
+                setCourse(data)
             })
             .catch((error) => {
                 console.log(error);
@@ -54,7 +47,6 @@ const CoursesFormContent = () => {
 
     const handleAddContent = (event) => {
         const { name, value } = event.target;
-        console.log(name, value)
         setContentList({
             ...contentList,
             [name]: value,
@@ -111,13 +103,20 @@ const CoursesFormContent = () => {
                                 sx={{ marginBottom: 1 }}
                                 typeOfTag={"body1"}
                                 initialValue={content.description}
-                                onUpdate={(value) => console.log(value)}
+                                onUpdate={editTag}
                             />
-                            {/* <img src={content.image} alt={content.title} /> */}
+                            <EditableTag
+                                name="image"
+                                sx={{ marginBottom: 1 }}
+                                typeOfTag={"img"}
+                                initialValue={content.image}
+                                onUpdate={editTag}
+                            />
                         </Box>
                     ))}
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between', alignItems: 'center' }}>
+                <form encType="multipart/form-data">
                     <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between' }}>
                                 <CourseContent
                                     key={course.content.length}
@@ -125,6 +124,7 @@ const CoursesFormContent = () => {
                                 />
                     </Box>
                     <Button onClick={(e) => addContent(e)} variant="contained" color="primary" sx={{ marginY: 2 }}>Agregar Sección</Button>
+                    </form>
                 </Box>
             </Box>
         )
