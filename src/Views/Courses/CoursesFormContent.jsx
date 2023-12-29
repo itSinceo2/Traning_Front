@@ -122,6 +122,7 @@ const handleAddContent = (event) => {
                                 onUpdate={editTag}
                             />
                             <EditableTag
+                                index={index}
                                 name="description"
                                 sx={{ marginBottom: 1 }}
                                 typeOfTag={"body1"}
@@ -129,6 +130,7 @@ const handleAddContent = (event) => {
                                 onUpdate={editTag}
                             />
                             <EditableTag
+                                index={index}
                                 name="image"
                                 sx={{ marginBottom: 1 }}
                                 typeOfTag={"img"}
