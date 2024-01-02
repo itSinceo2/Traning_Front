@@ -1,4 +1,4 @@
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import { getCourseDetail, updateCourse, updateCourseContent, updateCourseImage } from "../../Services/CoursesService";
 import { useEffect, useState } from "react";
 import { Box, Button, Divider } from "@mui/material";
@@ -7,11 +7,10 @@ import CourseHeader from "../../Components/CourseHeader/CourseHeader";
 import EditableTag from "../../Components/EditableTag/EditableTag";
 
 
-
-
 const CoursesFormContent = () => {
 
     const { id } = useParams()
+    const navigate = useNavigate();
 
     const [course, setCourse] = useState({
         name: "",
@@ -24,37 +23,36 @@ const CoursesFormContent = () => {
 
 
     useEffect(() => {
-        getCourseDetail(id)
-            .then((data) => {
-                setCourse(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-        , [id]);
+        console.log("Effect triggered after course update");
+      
+        // Coloca la llamada a getCourseDetail dentro de una función asincrónica
+        const fetchData = async () => {
+          try {
+            const data = await getCourseDetail(id);
+            setCourse(data);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData(); // Llama a la función fetchData directamente
+      
+      }, [id]);
+      
 
-    const addContent = (e) => {
-
+      const addContent = async (e) => {
         e.preventDefault();
-
         const formData = new FormData();
         formData.append("title", contentList.title);
         formData.append("description", contentList.description);
         formData.append("image", contentList.image instanceof File ? contentList.image : undefined);
-
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
+    
+        try {
+            const data = await updateCourseContent(id, formData, { headers: { "Content-Type": "multipart/form-data" } });
+            setCourse((prevCourse) => ({ ...prevCourse, content: data.content || [] }));
+        } catch (error) {
+            console.log(error);
         }
-
-        updateCourseContent(id, formData, { headers: { "Content-Type": "multipart/form-data" } })
-            .then((data) => {
-                console.log(data)
-                setCourse(data)
-            })
-            .catch((error) => {
-                console.log(error);
-            });
     }
 
     const handleAddContent = (event) => {
@@ -90,16 +88,13 @@ const CoursesFormContent = () => {
     }
 
     const editImage = (files, index) => {
-        
-   
+          
         const newContent = [...course.content];
         if (newContent[index]) {
             const name = "image";
             newContent[index][name] = files[0];
 
             const contentId = newContent[index]._id;
-
-
 
             setCourse({
                 ...course,
@@ -108,21 +103,12 @@ const CoursesFormContent = () => {
 
             const formData = new FormData();
             formData.append("image", files[0] instanceof File ? files[0] : undefined);
-            formData.append("contentId", contentId);
-
-            for (var pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
-
-            console.log(`id: ${id}`);
-            console.log(`contentId: ${contentId}`);
-            console.log(`formData: ${formData}`);
-            
+            formData.append("contentId", contentId);           
 
             updateCourseImage(id, formData, { headers: { "Content-Type": "multipart/form-data" }})
-                .then((data) => {
-                    console.log(data);
-                    setCourse(data);
+                .then((res) => {
+                    setCourse(res)
+                    navigate(`/course/content/${id}`); 
                 })
                 .catch((error) => {
                     console.log(error);
@@ -138,7 +124,6 @@ const CoursesFormContent = () => {
         return <div>Loading...</div>;
     }
     else {
-
 
         return (
             <Box sx={{ margin: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
