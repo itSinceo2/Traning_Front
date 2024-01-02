@@ -1,10 +1,11 @@
 import { useParams } from "react-router"
-import { getCourseDetail, updateCourse, updateCourseContent } from "../../Services/CoursesService";
+import { getCourseDetail, updateCourse, updateCourseContent, updateCourseImage } from "../../Services/CoursesService";
 import { useEffect, useState } from "react";
 import { Box, Button, Divider } from "@mui/material";
 import CourseContent from "./CourseContent";
 import CourseHeader from "../../Components/CourseHeader/CourseHeader";
 import EditableTag from "../../Components/EditableTag/EditableTag";
+
 
 
 
@@ -33,8 +34,6 @@ const CoursesFormContent = () => {
     }
         , [id]);
 
-    console.log(contentList)
-
     const addContent = (e) => {
 
         e.preventDefault();
@@ -58,23 +57,19 @@ const CoursesFormContent = () => {
             });
     }
 
-const handleAddContent = (event) => {
-    const { name, value, files } = event.target;
+    const handleAddContent = (event) => {
+        const { name, value, files } = event.target;
 
-    console.log("Name:", name);
-    console.log("Value:", value);
-    console.log("Files:", files);
-
-    name === "image" ?
-    setContentList({
-        ...contentList,
-        [name]: files[0],
-    }) :
-    setContentList({
-        ...contentList,
-        [name]: value,
-    });
-};
+        name === "image" ?
+            setContentList({
+                ...contentList,
+                [name]: files[0],
+            }) :
+            setContentList({
+                ...contentList,
+                [name]: value,
+            });
+    };
 
     const editTag = (e, index) => {
 
@@ -94,6 +89,51 @@ const handleAddContent = (event) => {
             });
     }
 
+    const editImage = (files, index) => {
+        
+   
+        const newContent = [...course.content];
+        if (newContent[index]) {
+            const name = "image";
+            newContent[index][name] = files[0];
+
+            const contentId = newContent[index]._id;
+
+
+
+            setCourse({
+                ...course,
+                content: newContent
+            });
+
+            const formData = new FormData();
+            formData.append("image", files[0] instanceof File ? files[0] : undefined);
+            formData.append("contentId", contentId);
+
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+
+            console.log(`id: ${id}`);
+            console.log(`contentId: ${contentId}`);
+            console.log(`formData: ${formData}`);
+            
+
+            updateCourseImage(id, formData, { headers: { "Content-Type": "multipart/form-data" }})
+                .then((data) => {
+                    console.log(data);
+                    setCourse(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            console.error(`newContent[${index}] is undefined`);
+        }
+    };
+
+
+
     if (!course.mainImage) {
         return <div>Loading...</div>;
     }
@@ -111,38 +151,41 @@ const handleAddContent = (event) => {
                 </Box >
                 <Divider orientation='horizontal' flexItem />
                 <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center' }}>
-                    {course.content?.map((content, index) => (
-                        <Box key={index} sx={{ marginBottom: 3 }}>
-                            <EditableTag
-                                index={index}
-                                name="title"
-                                sx={{ marginBottom: 1 }}
-                                typeOfTag={"h5"}
-                                initialValue={content.title}
-                                onUpdate={editTag}
-                            />
-                            <EditableTag
-                                index={index}
-                                name="description"
-                                sx={{ marginBottom: 1 }}
-                                typeOfTag={"body1"}
-                                initialValue={content.description}
-                                onUpdate={editTag}
-                            />
-                            <EditableTag
-                                index={index}
-                                name="image"
-                                sx={{ marginBottom: 1 }}
-                                typeOfTag={"img"}
-                                initialValue={content.image}
-                                onUpdate={editTag}
-                            />
-                        </Box>
-                    ))}
+                    
+                        {course.content?.map((content, index) => (
+                            <Box key={index} sx={{ marginBottom: 3 }}>
+                                <EditableTag
+                                    index={index}
+                                    name="title"
+                                    sx={{ marginBottom: 1 }}
+                                    typeOfTag={"h5"}
+                                    initialValue={content.title ? content.title : ""}
+                                    onUpdate={editTag}
+                                />
+                                <EditableTag
+                                    index={index}
+                                    name="description"
+                                    sx={{ marginBottom: 1 }}
+                                    typeOfTag={"body1"}
+                                    initialValue={content.description ? content.description : ""}
+                                    onUpdate={editTag}
+                                />
+                                <EditableTag
+                                    index={index}
+                                    name="image"
+                                    sx={{ marginBottom: 1 }}
+                                    typeOfTag={"img"}
+                                    initialValue={content.image ? content.image : ""}
+                                    editImage={(e) => editImage(e, index)}
+
+                                />
+                            </Box>
+                        ))}
+                    
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between', alignItems: 'center' }}>
 
-                    <form action="submit"  encType="multipart/form-data" >
+                    <form action="submit" encType="multipart/form-data" >
                         <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'space-between' }}>
                             <CourseContent
                                 key={course.content.length}
