@@ -39,73 +39,85 @@ const EditableTag = ({ typeOfTag, initialValue, onUpdate, name, index, editImage
     case "title":
       inputComponent = (
         <form action='submit'>
-        <TextField
-          name={name}
-          value={value}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          autoFocus
-        />
+          <TextField
+            name={name}
+            value={value}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            autoFocus
+          />
         </form>
       );
       break;
     case "description":
       inputComponent = (
         <form action='submit'>
-        <TextareaAutosize
-          name={name}
-          value={value}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          autoFocus
-        />
+          <TextareaAutosize
+            name={name}
+            value={value}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            autoFocus
+          />
         </form>
       );
       break;
     case "image":
       inputComponent = (
-          <form action="submit" encType="multipart/form-data">
-        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }} >
-          <input type='file' id='file' onChange={handleImageChange} style={{ display: 'none' }} />
-          <label htmlFor='file'>
-            <Button
-              variant="contained"
-              component="span"
-              startIcon={<CloudUploadIcon />}
-              type='submit'
-            >
-              Upload
-            </Button>
-          </label>
-          <Typography variant="body1" sx={{ marginBottom: 1 }}>{value.name}</Typography>
-        </Box>
-          </form>
+        <form action="submit" encType="multipart/form-data">
+          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }} >
+            <input type='file' id='file' onChange={handleImageChange} style={{ display: 'none' }} />
+            <label htmlFor='file'>
+              <Button
+                variant="contained"
+                component="span"
+                startIcon={<CloudUploadIcon />}
+                type='submit'
+              >
+                Upload
+              </Button>
+            </label>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>{value.name}</Typography>
+          </Box>
+        </form>
       );
       break;
 
     default:
       inputComponent = (
         <form action='submit'>
-        <TextField
-          name={name}
-          value={value}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          autoFocus
-        />
+          <TextField
+            name={name}
+            value={value}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            autoFocus
+          />
         </form>
       );
   }
 
   return (
-    <div onDoubleClick={handleDoubleClick}>
+    <Box onDoubleClick={handleDoubleClick} >
       {isEditing ? inputComponent : (
-        name === 'image' ? <img src={value} alt={value} style={{maxWidth:'80%'}} /> :
+        name === 'image'
+          ?
+          <div style={{ maxWidth: '80%',  margin: '0 auto', textAlign: 'center' }}>
+            <img
+              src={value}
+              alt={value}
+              style={{ maxWidth: '100%',  height: 'auto', border: '1px solid black' }}
+            />
+          </div>
+          :
+          <div style={{ maxWidth: '80%', minWidth:'70vh', margin: '0 auto', textAlign: 'center' }}>
           <Typography variant={typeOfTag} onDoubleClick={handleDoubleClick}>
             {value}
           </Typography>
+          </div>
+          
       )}
-    </div>
+    </Box>
   );
 };
 

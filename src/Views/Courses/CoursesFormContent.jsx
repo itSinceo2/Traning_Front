@@ -107,6 +107,7 @@ const CoursesFormContent = () => {
 
             updateCourseImage(id, formData, { headers: { "Content-Type": "multipart/form-data" }})
                 .then((res) => {
+                    console.log(res)
                     setCourse(res)
                     navigate(`/course/content/${id}`); 
                 })
@@ -160,6 +161,7 @@ const CoursesFormContent = () => {
                         {course.content?.map((content, index) => (
                             <Card key={content._id} sx={{ display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center', margin: 2, padding: 1, minWidth:'80vh' }}>
                            
+                                <Box>
                                 <EditableTag
                                     index={index}
                                     name="title"
@@ -168,14 +170,18 @@ const CoursesFormContent = () => {
                                     initialValue={content.title ? content.title : ""}
                                     onUpdate={editTag}
                                 />
+                                </Box>
+                                <Box>
                                 <EditableTag
                                     index={index}
                                     name="description"
                                     sx={{ marginBottom: 1 }}
-                                    typeOfTag={"body1"}
+                                    typeOfTag={"body2"}
                                     initialValue={content.description ? content.description : ""}
                                     onUpdate={editTag}
                                 />
+                                </Box>
+                                <Box>
                                 <EditableTag
                                     index={index}
                                     name="image"
@@ -183,9 +189,9 @@ const CoursesFormContent = () => {
                                     typeOfTag={"img"}
                                     initialValue={content.image ? content.image : ""}
                                     editImage={(e) => editImage(e, index)}
-
                                 />
-                                {/* Editar toda la seccion*/}
+                                </Box>
+
                                 <Box sx={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Button variant="contained" color="primary" sx={{ margin: 1 }}>Editar Sección</Button>
                                 <Button variant="contained" color="secondary" sx={{ marginY: 2 }} onClick={(e) => hanndleDeleteContent(e, index)}>Eliminar contenido</Button>
