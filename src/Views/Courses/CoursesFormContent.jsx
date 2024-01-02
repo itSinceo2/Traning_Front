@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router"
 import { getCourseDetail, updateCourse, updateCourseContent, updateCourseImage } from "../../Services/CoursesService";
 import { useEffect, useState } from "react";
-import { Box, Button, Divider } from "@mui/material";
+import { Box, Button, Card, Divider } from "@mui/material";
 import CourseContent from "./CourseContent";
 import CourseHeader from "../../Components/CourseHeader/CourseHeader";
 import EditableTag from "../../Components/EditableTag/EditableTag";
@@ -118,6 +118,26 @@ const CoursesFormContent = () => {
         }
     };
 
+    const hanndleDeleteContent = (e, index) => {
+        e.preventDefault();
+        const newContent = [...course.content];
+        console.log(newContent)
+        console.log(index)
+        newContent.splice(index, 1);
+        setCourse({
+            ...course,
+            content: newContent
+        })
+        updateCourse(id, { content: newContent })
+            .then((data) => {
+                console.log(data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+
 
 
     if (!course.mainImage) {
@@ -138,7 +158,8 @@ const CoursesFormContent = () => {
                 <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center' }}>
                     
                         {course.content?.map((content, index) => (
-                            <Box key={index} sx={{ marginBottom: 3 }}>
+                            <Card key={content._id} sx={{ display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center', margin: 2, padding: 1, minWidth:'80vh' }}>
+                           
                                 <EditableTag
                                     index={index}
                                     name="title"
@@ -164,7 +185,13 @@ const CoursesFormContent = () => {
                                     editImage={(e) => editImage(e, index)}
 
                                 />
-                            </Box>
+                                {/* Editar toda la seccion*/}
+                                <Box sx={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Button variant="contained" color="primary" sx={{ margin: 1 }}>Editar Sección</Button>
+                                <Button variant="contained" color="secondary" sx={{ marginY: 2 }} onClick={(e) => hanndleDeleteContent(e, index)}>Eliminar contenido</Button>
+                                </Box>
+                 
+                            </Card>
                         ))}
                     
                 </Box>

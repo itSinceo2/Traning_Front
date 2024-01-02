@@ -100,7 +100,7 @@ const EditableTag = ({ typeOfTag, initialValue, onUpdate, name, index, editImage
   return (
     <div onDoubleClick={handleDoubleClick}>
       {isEditing ? inputComponent : (
-        name === 'image' ? <img src={value} alt={value} /> :
+        name === 'image' ? <img src={value} alt={value} style={{maxWidth:'80%'}} /> :
           <Typography variant={typeOfTag} onDoubleClick={handleDoubleClick}>
             {value}
           </Typography>
