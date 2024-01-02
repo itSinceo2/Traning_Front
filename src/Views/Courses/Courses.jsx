@@ -2,6 +2,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import CourseCard from "../../Components/CourseCard/CourseCard";
 import { useEffect, useState } from "react";
 import { getCoursesList } from "../../Services/CoursesService";
+import { deleteCourse } from '../../Services/CoursesService';
 import Search from "../../Components/Search/Search";
 
 const Courses = () => {
@@ -21,6 +22,19 @@ const Courses = () => {
 
     const handleSearch = (filteredOptions) => {
         setFilterCourses(filteredOptions);
+    };
+
+    const handleDeleteCourse = (id) => {
+
+        deleteCourse(id)
+            .then(() => {
+                console.log("Curso eliminado");
+                setCourses(courses.filter((course) => course.id !== id));
+            })
+            .catch((err) => {
+                console.log(err);
+                console.log("Error al eliminar el curso");
+            });
     };
 
     const coursesToRender = filterCourses.length ? filterCourses : courses;
@@ -44,7 +58,10 @@ const Courses = () => {
                     {
                         coursesToRender.map((course) => (
                             <Grid key={course.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-                                <CourseCard course={course} />
+                                <CourseCard
+                                    course={course}
+                                    handleDeleteCourse={handleDeleteCourse}
+                                />
                             </Grid>
                         ))
                     }

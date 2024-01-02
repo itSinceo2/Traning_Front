@@ -4,15 +4,16 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
-const CourseCard =({course}) => {
+
+const CourseCard = ({ course, handleDeleteCourse }) => {
+
+
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={course.mainImage}
-        title={course.title}
-      />
+      <CardMedia sx={{ height: 140 }} image={course.mainImage} title={course.title} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {course.title}
@@ -22,11 +23,17 @@ const CourseCard =({course}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button href={`/course/detail/${course.id}`} >Ir al curso</Button>
-        <Button href={`/course/content/${course.id}`} >Editar curso</Button>
+        <Button href={`/course/detail/${course.id}`}>ver más</Button>
+        <Button href={`/course/content/${course.id}`}>
+          <EditIcon />
+        </Button>
+        <Button onClick={() => handleDeleteCourse(course.id)}>
+
+          <DeleteIcon />
+        </Button>
       </CardActions>
     </Card>
   );
-}
+};
 
 export default CourseCard;

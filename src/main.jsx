@@ -7,12 +7,11 @@ import "./index.css";
 import { AuthContextProvider } from "./Contexts/AuthContext.jsx";
 
 
-import { StrictMode } from "react";
 
 const theme = createTheme();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <StrictMode>
+
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <AuthContextProvider>
@@ -21,5 +20,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </BrowserRouter>
     </AuthContextProvider>
   </ThemeProvider>
-  </StrictMode>
+
 );
