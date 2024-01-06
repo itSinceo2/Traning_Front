@@ -13,8 +13,8 @@ const Login = () => {
     const [method, setMethod] = useState('email');
     const formik = useFormik({
         initialValues: {
-            email: 'usuario2@example.com',
-            password: 'contrasena123',
+            email: 'gal.warehouse@hack-erp.com',
+            password: 'gal123',
             phoneNumber: 111111,
             submit: null
         },
