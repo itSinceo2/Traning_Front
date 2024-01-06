@@ -13,11 +13,17 @@ import MenuItem from '@mui/material/MenuItem';
 import { logout } from '../../Stores/AccessTokenStore';
 import { Link } from '@mui/material';
 import { useNavigate } from 'react-router';
+import { useAuthContext } from '../../Contexts/AuthContext';
 
 
 
 const pages = ['Clientes', 'Cursos', 'Usuarios'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+
+
+
+
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -25,9 +31,12 @@ function Navbar() {
   const [method] = React.useState('');
   const navigate = useNavigate();
 
+  const { user } = useAuthContext();
+
  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+    console.log(event.currentTarget)
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -59,6 +68,8 @@ function Navbar() {
   }
 
   const handleRouteClick = (page) => {
+
+    
     //navegar a la ruta `/${page.toLowerCase()}`
     navigate(`/${page.toLowerCase()}`);
   }
@@ -178,7 +189,7 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src={user.avatar} />
               </IconButton>
             </Tooltip>
             <Menu
