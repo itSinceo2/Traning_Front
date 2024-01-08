@@ -15,7 +15,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { TableHead, Avatar } from '@mui/material';
+import { TableHead } from '@mui/material';
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -78,9 +78,15 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
+
+
+
+
+// eslint-disable-next-line react/prop-types
 export default function List({ rows, columns, headers }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -126,7 +132,7 @@ export default function List({ rows, columns, headers }) {
                                     >
                                         {column.includes('.')
                                             ? column.split('.').reduce((obj, key) => obj[key], row)
-                                            : renderTableCell(column, row)}
+                                            : row[column]}
                                     </TableCell>
                                 ))}
                             </TableRow>
@@ -161,14 +167,4 @@ export default function List({ rows, columns, headers }) {
             </TableContainer>
         </Box>
     );
-
-    function renderTableCell(column, rowData) {
-        // Check if the column is an image column
-        if (column.toLowerCase().includes('avatar') || column.toLowerCase().includes('image')) {
-            const avatarUrl = rowData[column];
-            return <Avatar alt="Avatar" src={avatarUrl} />;
-        }
-        // For other non-image columns, return the text content
-        return rowData[column];
-    }
 }
