@@ -103,9 +103,9 @@ export default function List({ rows, columns, headers }) {
                         <TableRow>
                             {headers.map((column, index) => (
                                 <TableCell
-                                key={index}
-                                style={{ width: 160, textAlign: index === 0 ? 'left' : 'right', fontWeight: 'bold' }}
-                                align="right"
+                                    key={index}
+                                    style={{ width: 160, textAlign: index === 0 ? 'left' : 'right', fontWeight: 'bold' }}
+                                    align="right"
                                 >
                                     {column === 'courses.length' ? 'Courses' : column}
                                 </TableCell>
@@ -120,12 +120,12 @@ export default function List({ rows, columns, headers }) {
                             <TableRow key={row.id}>
                                 {columns.map((column, index) => (
                                     <TableCell
-                                    key={index}
-                                    style={{ width: 160, textAlign: index === 0 ? 'left' : 'right' }}
-                                    align="right"
+                                        key={index}
+                                        style={{ width: 160, textAlign: index === 0 ? 'left' : 'right' }}
+                                        align="right"
                                     >
                                         {column.includes('.')
-                                            ? column.split('.').reduce((obj, key) => obj[key], row)
+                                            ? column.split('.').reduce((obj, key) => (obj && obj[key]) || "-", row)
                                             : renderTableCell(column, row)}
                                     </TableCell>
                                 ))}
