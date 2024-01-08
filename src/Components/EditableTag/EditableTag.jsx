@@ -100,7 +100,7 @@ const EditableTag = ({ typeOfTag, initialValue, onUpdate, name, index, editImage
   return (
     <Box onDoubleClick={handleDoubleClick} >
       {isEditing ? inputComponent : (
-        name === 'image'
+        name === 'image' || name === 'avatar'
           ?
           <div style={{ maxWidth: '80%',  margin: '0 auto', textAlign: 'center' }}>
             <img

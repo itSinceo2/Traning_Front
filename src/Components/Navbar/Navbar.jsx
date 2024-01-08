@@ -77,7 +77,7 @@ function Navbar() {
   const handleSettingsClick = (setting) => {
     switch (setting) {
       case 'Profile':
-        // Lógica para la opción 'Profile'
+        navigate(`/users/profile/${user.id}`);
         break;
       case 'Account':
         // Lógica para la opción 'Account'
