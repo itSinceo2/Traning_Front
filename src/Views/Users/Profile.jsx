@@ -1,40 +1,51 @@
-import { Avatar, Box, Button, Card, Typography } from "@mui/material";
+import { Avatar, Box, Button, Card, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
 import { useAuthContext } from "../../Contexts/AuthContext";
-import { useState } from "react";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
+import CourseStatus from "../../Components/CourseStatus/CourseStatus";
+import BadgeIcon from '@mui/icons-material/Badge';
+import EmailIcon from '@mui/icons-material/Email';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 
 
 const Profile = () => {
     const { user } = useAuthContext();
 
-    
-    const { id } = useParams();
     const navigate = useNavigate();
-
-    const [userProfile, setUserProfile] = useState({
-        username: "",
-        avatar: "",
-        email: "",
-        password: "",
-        role: "",
-        company: "",
-    });
-
-
 
     return (
 
-        <Box sx={{ display: 'flex', flexDirection: 'column',  height:'100vh', width:'100%' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100%' }}>
             <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', maxWidth: '100%', margin: "2" }}>
                 <Typography variant="h4"> Mi Perfil</Typography>
+                <Avatar sx={{ width: '15vh', height: '15vh', margin: 2 }} src={user.avatar} />
+                <Box sx={{ display: 'flex', justifyContent: 'start', alignItems: 'start', gap: 2 }}>
+                    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                        <ListItem>
+                           <ListItemAvatar>
+                            <Avatar><BadgeIcon /></Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary="Nombre" secondary={user.username} />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemAvatar>
+                                <Avatar><EmailIcon /></Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary="Email" secondary={user.email} />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemAvatar>
+                                <Avatar><LocationCityIcon /></Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary="Empresa" secondary={user.company.name} />
+                        </ListItem>
+                    </List>
+                    
 
-                    <Avatar sx={{ width: 200, height: 200, margin: 2 }} src={user.avatar} />
-                
-               <Typography variant="h5">{user.username}</Typography>
-                <Typography variant="h6">{user.email}</Typography>
-                <Typography variant="h6">{user.role}</Typography>
-                <Typography variant="h6">{user.company.name}</Typography>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                        <Typography variant="subtitle"><b>Mis Cursos</b></Typography>
+                        <CourseStatus courses={user.courses} />
+                    </Box>
+                </Box>
 
                 <Button variant="contained" color="primary" sx={{ margin: 1 }} onClick={() => navigate(`/users/edit/${user.id}`)}>Editar Perfil</Button>
 
