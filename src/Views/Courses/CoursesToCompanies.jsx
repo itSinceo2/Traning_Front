@@ -21,7 +21,7 @@ const CoursesToCompanies = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, [])
+    }, [id])
 
     useEffect(() => {
         getClientsList()
