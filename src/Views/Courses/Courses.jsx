@@ -59,8 +59,10 @@ const Courses = () => {
                         coursesToRender.map((course) => (
                             <Grid key={course.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
                                 <CourseCard
-                                    course={course}
-                                    handleDeleteCourse={handleDeleteCourse}
+                                    course = {course}
+                                    handleDeleteCourse = {handleDeleteCourse}
+                                    action = "Asignar"
+                                    route = {`/course/asign/companies/${course.id}`}
                                 />
                             </Grid>
                         ))

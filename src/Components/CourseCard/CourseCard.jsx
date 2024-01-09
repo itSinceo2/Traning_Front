@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 
-const CourseCard = ({ course, handleDeleteCourse }) => {
+const CourseCard = ({ course, handleDeleteCourse, action, route }) => {
 
 
   return (
@@ -23,7 +23,7 @@ const CourseCard = ({ course, handleDeleteCourse }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button href={`/course/detail/${course.id}`}>ver más</Button>
+        <Button href={route}>{action}</Button>
         <Button href={`/course/content/${course.id}`}>
           <EditIcon />
         </Button>

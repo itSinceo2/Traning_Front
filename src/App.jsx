@@ -16,6 +16,7 @@ import CourseDetail from './Views/Courses/CourseDetail'
 import UsersForm from './Views/Users/UsersForm'
 import Profile from './Views/Users/Profile'
 import UsersEditForm from './Views/Users/UsersEditForm'
+import CoursesToCompanies from './Views/Courses/CoursesToCompanies'
 
 
 
@@ -53,6 +54,7 @@ function App() {
             <Route path="/course/new" element={<CoursesForm />} />
             <Route path="/course/detail/:id" element={<CourseDetail />} />
             <Route path="/course/content/:id" element={<CoursesFormContent />} />
+            <Route path="/course/asign/companies/:id" element={<CoursesToCompanies />} />
 
 
 
