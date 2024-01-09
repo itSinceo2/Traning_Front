@@ -21,10 +21,6 @@ const pages = ['Clientes', 'Cursos', 'Usuarios'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
-
-
-
-
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

@@ -15,6 +15,7 @@ import CoursesFormContent from './Views/Courses/CoursesFormContent'
 import CourseDetail from './Views/Courses/CourseDetail'
 import UsersForm from './Views/Users/UsersForm'
 import Profile from './Views/Users/Profile'
+import UsersEditForm from './Views/Users/UsersEditForm'
 
 
 
@@ -58,6 +59,7 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/users/new" element={<UsersForm/>} />
             <Route path="/users/profile/:id" element={<Profile/>} />
+            <Route path="/users/edit/:id" element={<UsersEditForm/>} />
           </Route>
           <Route path="/login" element={<Login />} />
       </Routes >
