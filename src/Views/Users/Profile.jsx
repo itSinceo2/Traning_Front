@@ -39,8 +39,6 @@ const Profile = () => {
                             <ListItemText primary="Empresa" secondary={user.company.name} />
                         </ListItem>
                     </List>
-                    
-
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                         <Typography variant="subtitle"><b>Mis Cursos</b></Typography>
                         <CourseStatus courses={user.courses} />
