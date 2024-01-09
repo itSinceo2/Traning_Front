@@ -4,24 +4,39 @@ import { useState } from "react"
 import { Box, Button, Typography } from "@mui/material"
 import List from "../../Components/List/List"
 import Search from "../../Components/Search/Search";
+import { useAuthContext } from "../../Contexts/AuthContext"
 
 
 const Users = () => {
+
+    const { user: loggedUser } = useAuthContext();
+
+    const company = loggedUser.company.id
+
 
     const [users, setUsers] = useState([])
     const [filteredUsers, setFilteredUsers] = useState([])
 
     useEffect(() => {
         getUsersList()
-            .then(res => setUsers(res))
+            .then(res => {
+                if (loggedUser.role === 'Administrador SinCeO2') {
+                    setUsers(res)
+                } else {
+                    console.log('entra al else')
+                    
+                    const dataToRender = res.filter(user =>{
+                        return user.company && user.company.id === company;
+                    })
+                    setUsers(dataToRender)
+                }
+            })
             .catch(err => console.log(err))
     }, [])
 
     const handleSearch = (filteredOptions) => {
         setFilteredUsers(filteredOptions)
     }
-
-    console.log(filteredUsers)
 
     return (
         !users ?
