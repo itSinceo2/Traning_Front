@@ -36,6 +36,7 @@ const AsignCourseTable = ({
     rows,
     columns,
     properties,
+    valueToChange,
 }) => {
     return (
         <TableContainer component={Paper}>
@@ -53,7 +54,7 @@ const AsignCourseTable = ({
                     {rows.map((row, i) => (
                         <StyledTableRow key={i}>
                     <StyledTableCell align="center" component="th" scope="row">
-                    <Switch {...label} defaultChecked color="primary" />
+                    <Switch {...label} value={valueToChange} defaultChecked color="primary" />
                     </StyledTableCell>
                             {
                                 properties.map((property, i) => (
