@@ -44,7 +44,7 @@ const Users = () => {
             :
             <Box className="Users" sx={{ marginX: 2 }}>
                 <Typography variant="h3" >Usuarios</Typography >
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', marginX:10 }}>
                     <Search
                         options={users}
                         searchLabel="Buscar usuario"
