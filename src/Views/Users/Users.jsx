@@ -32,7 +32,7 @@ const Users = () => {
                 }
             })
             .catch(err => console.log(err))
-    }, [])
+    }, [company, loggedUser.role]) // Include 'company' and 'loggedUser.role' in the dependency array
 
     const handleSearch = (filteredOptions) => {
         setFilteredUsers(filteredOptions)
