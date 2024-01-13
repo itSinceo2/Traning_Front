@@ -17,8 +17,7 @@ import { useAuthContext } from '../../Contexts/AuthContext';
 
 
 
-const pages = ['Clientes', 'Cursos', 'Usuarios'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 
 
 function Navbar() {
@@ -26,8 +25,28 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [method] = React.useState('');
   const navigate = useNavigate();
-
+  
   const { user } = useAuthContext();
+  
+  
+  const settings = ['Profile', 'Logout'];
+  const pages =[]
+
+  switch (user.role) {
+    case 'Administrador SinCeO2':
+      pages.push('Clientes', 'Cursos', 'Mis Cursos', 'Usuarios');
+      break;
+    case 'Administrador':
+      pages.push('Mis Cursos', 'Usuarios');
+      break;
+      case 'Usuario':
+      pages.push('Mis Cursos');
+      break;
+    default:
+      break;
+  }
+
+
 
  
   const handleOpenNavMenu = (event) => {
@@ -98,7 +117,7 @@ function Navbar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
