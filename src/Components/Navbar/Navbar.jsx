@@ -15,11 +15,6 @@ import { Link } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { useAuthContext } from '../../Contexts/AuthContext';
 
-
-
-
-
-
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -45,9 +40,6 @@ function Navbar() {
     default:
       break;
   }
-
-
-
  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -74,6 +66,9 @@ function Navbar() {
       case 'Cursos':
         handleRouteClick('Courses')
         break;
+      case 'Mis Cursos':
+        handleRouteClick(`MyCourses/${user.id}`)
+        break;
       case 'Usuarios':
         handleRouteClick('Users')
         break;
@@ -83,10 +78,8 @@ function Navbar() {
   }
 
   const handleRouteClick = (page) => {
-
-    
-    //navegar a la ruta `/${page.toLowerCase()}`
     navigate(`/${page.toLowerCase()}`);
+    console.log(page)
   }
   
   const handleSettingsClick = (setting) => {
@@ -94,14 +87,7 @@ function Navbar() {
       case 'Profile':
         navigate(`/users/profile/${user.id}`);
         break;
-      case 'Account':
-        // Lógica para la opción 'Account'
-        break;
-      case 'Dashboard':
-        // Lógica para la opción 'Dashboard'
-        break;
       case 'Logout':
-        // Lógica para la opción 'Logout'
         logout();
         break;
       default:
