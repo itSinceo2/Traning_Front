@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Switch from '@mui/material/Switch';
-
+import Skeleton from '@mui/material/Skeleton';
 
 const label = { inputProps: { 'aria-label': 'Color switch demo' } };
 
@@ -31,42 +31,66 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-
 const AsignCourseTable = ({
+    id,
     rows,
     columns,
     properties,
-    valueToChange,
+    handleChange,
+    handleupdate,
+    loading
 }) => {
+
+    const changeAndUpdaye = async (e, row) => {
+        await handleChange(e, row);
+        await handleupdate();
+    }
+
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        {
-                            columns.map((column,i) => (
-                                <StyledTableCell align="center" key={i}>{column}</StyledTableCell>
-                            ))
-                        }
+                        {columns.map((column, i) => (
+                            <StyledTableCell align="center" key={i}>
+                                {column}
+                            </StyledTableCell>
+                        ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row, i) => (
                         <StyledTableRow key={i}>
-                    <StyledTableCell align="center" component="th" scope="row">
-                    <Switch {...label} value={valueToChange} defaultChecked color="primary" />
-                    </StyledTableCell>
-                            {
-                                properties.map((property, i) => (
-                                    <StyledTableCell key={i} align="center">{row[property]}</StyledTableCell>
-                                ))
-                            }
+                            <StyledTableCell align="center" component="th" scope="row">
+                                {loading ? (
+                                    <Skeleton variant="rounded" width={48} height={24} />
+                                ) : (
+                                    <Switch
+                                        {...label}
+                                        checked={
+                                            row.courses.find((course) => course.id === id)
+                                                ? true
+                                                : false
+                                        }
+                                        color="primary"
+                                        onClick={(e) => {
+                                            changeAndUpdaye(e, row);
+                                        }}
+                                    />
+                                )}
+                            </StyledTableCell>
+                            {properties.map((property, i) => (
+                                <StyledTableCell key={i} align="center">
+                                    {row[property]}
+                                </StyledTableCell>
+                            ))}
                         </StyledTableRow>
                     ))}
                 </TableBody>
             </Table>
         </TableContainer>
     );
-}
+};
 
 export default AsignCourseTable;
