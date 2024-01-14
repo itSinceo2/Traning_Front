@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getCourseDetail } from "../../Services/CoursesService";
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 
 const CourseDetail = () => {
     const { id } = useParams();
@@ -20,9 +20,11 @@ const CourseDetail = () => {
     
     return (
         <Box className="container" sx={{marginTop:4}}>
-        <Typography variant="h3" sx={{ marginBottom: 3 }}>{course.name}</Typography>
+        <Typography variant="h4" sx={{ marginBottom: 3 }}>{course.name}</Typography>
         <Typography variant="body1" sx={{ marginBottom: 3 }}>{course.description}</Typography>
-        <Typography variant="h4" sx={{ marginBottom: 3 }}>Temario</Typography>
+        <Divider orientation='horizontal' flexItem />
+
+        <Typography variant="body" sx={{ marginBottom: 3 }}>Contenido</Typography>
         
         
         {
