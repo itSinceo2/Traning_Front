@@ -9,6 +9,8 @@ const CourseDetail = () => {
 
     const [course, setCourse] = useState({});
 
+    
+
     useEffect(() => {
         getCourseDetail(id)
             .then((data) => {
@@ -18,8 +20,6 @@ const CourseDetail = () => {
                 console.log(error);
             });
     }, [id]);
-
-    console.log(course)
 
     if (!course) return <h1>El curso no existe</h1>
     else {
@@ -31,7 +31,7 @@ const CourseDetail = () => {
                 <Divider orientation='horizontal' flexItem />
 
 
-                <ViewOfContent content={course.content} test={course.tests} />
+                <ViewOfContent content={course.content} test={course.tests} courseId={id} />
 
             </Box>
         );
