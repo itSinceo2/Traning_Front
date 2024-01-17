@@ -6,6 +6,8 @@ import { Box, Card } from '@mui/material';
 import CourseTest from '../../Components/CourseTest/CourseTest';
 import { updateTest } from '../../Services/UsersService';
 import { useAuthContext } from '../../Contexts/AuthContext';
+import CorrectAnswers from '../../Components/CourseTest/CorrectAnswers';
+import ErrorBoundary from '../../Components/ErrorBoundary/ErrorBoundary';
 
 
 const ViewOfContent = ({ content, test, courseId }) => {
@@ -103,10 +105,24 @@ const ViewOfContent = ({ content, test, courseId }) => {
         }
         return false;
     };
-    
 
 
-    console.log(currentUser)
+
+    //finding the score of the test from the user
+    const findScore = (testEvaluate) => {
+        for (const course of currentUser.courses) {
+            for (const test of course.testsResults) {
+                if (test.testId === testEvaluate._id) {
+                    console.log(currentUser.courses)
+                    console.log(test.score / test.responses.length);
+                    //1 decimal
+                    return `${(test.score / test.responses.length * 100).toFixed(1)}%`;
+                }
+            }
+        }
+        return false;
+    }
+
 
     if (!contentArray || contentArray.length === 0) {
         return (
@@ -120,9 +136,22 @@ const ViewOfContent = ({ content, test, courseId }) => {
             <Stack spacing={2}>
                 <Box>
                     {contentArray[page - 1].questions ? (
-                        console.log(existingTest(contentArray[page - 1]._id)),
+
                         existingTest(contentArray[page - 1]) ? (
-                            <p>Ya has realizado este test</p>
+                            console.log(contentArray[page - 1]),
+                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginY: 2 }}>
+                                <Typography variant='h5'>Ya has realizado este test</Typography>
+                                <Typography variant='body'>Tu puntuación fue de: {findScore(contentArray[page - 1])}</Typography>
+                                <Typography variant='body2'>a continuación se muestran las respuestas</Typography>
+                                <Box>
+                                    <ErrorBoundary>
+                                <CorrectAnswers
+                                    questions={contentArray[page - 1].questions}
+                                />
+                                </ErrorBoundary>
+                                </Box>
+                            </Box>
+
                         ) : (
                             <CourseTest
                                 contentArray={contentArray}
