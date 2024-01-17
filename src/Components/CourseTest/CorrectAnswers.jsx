@@ -1,4 +1,4 @@
-import { Box, Card, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 
 
 const CorrectAnswers = ({ questions }) => {
