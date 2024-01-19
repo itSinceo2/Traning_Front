@@ -25,7 +25,7 @@ const ViewOfContent = ({ content, test, courseId }) => {
         const fetchData = async () => {
             try {
                 const newArray = [];
-                content.forEach((contentItem) => {
+                content?.forEach((contentItem) => {
                     const matchingTest = test.find((testItem) => contentItem.title === testItem.title);
                     if (matchingTest) {
                         newArray.push(contentItem)
@@ -95,7 +95,6 @@ const ViewOfContent = ({ content, test, courseId }) => {
     };
 
     const existingTest = (testEvaluate) => {
-        console.log(testEvaluate);
         for (const course of currentUser.courses) {
             for (const test of course.testsResults) {
                 if (test.testId === testEvaluate._id) {
@@ -113,9 +112,6 @@ const ViewOfContent = ({ content, test, courseId }) => {
         for (const course of currentUser.courses) {
             for (const test of course.testsResults) {
                 if (test.testId === testEvaluate._id) {
-                    console.log(currentUser.courses)
-                    console.log(test.score / test.responses.length);
-                    //1 decimal
                     return `${(test.score / test.responses.length * 100).toFixed(1)}%`;
                 }
             }
@@ -138,7 +134,6 @@ const ViewOfContent = ({ content, test, courseId }) => {
                     {contentArray[page - 1].questions ? (
 
                         existingTest(contentArray[page - 1]) ? (
-                            console.log(contentArray[page - 1]),
                             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginY: 2 }}>
                                 <Typography variant='h5'>Ya has realizado este test</Typography>
                                 <Typography variant='body'>Tu puntuación fue de: {findScore(contentArray[page - 1])}</Typography>

@@ -16,7 +16,10 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const CourseContent = ({ onChange }) => {
+
   const [file, setFile] = useState(null);
+
+
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];

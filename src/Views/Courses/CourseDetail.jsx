@@ -3,36 +3,74 @@ import { useParams } from "react-router";
 import { getCourseDetail } from "../../Services/CoursesService";
 import { Box, Divider, Typography } from "@mui/material";
 import ViewOfContent from "./ViewOfContent";
+import { useAuthContext } from "../../Contexts/AuthContext";
+import { updateDedication } from "../../Services/UsersService";
 
 const CourseDetail = () => {
     const { id } = useParams();
-
     const [course, setCourse] = useState({});
+    const { user } = useAuthContext();
+    const [viewTime, setViewTime] = useState(0);
 
-    
-
+    // Primer useEffect para obtener detalles del curso
     useEffect(() => {
-        getCourseDetail(id)
-            .then((data) => {
+        const fetchCourseDetail = async () => {
+            try {
+                const data = await getCourseDetail(id);
                 setCourse(data);
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.log(error);
-            });
+            }
+        };
+
+        fetchCourseDetail();
     }, [id]);
 
-    if (!course) return <h1>El curso no existe</h1>
-    else {
+    // Segundo useEffect para manejar el tiempo de visualización y actualizar la dedicación
+    useEffect(() => {
+        let timer;
 
+        const handleViewTime = () => {
+            setViewTime((prev) => prev + 1);
+        };
+
+        timer = setInterval(handleViewTime, 1000);
+
+        return () => {
+            clearInterval(timer);
+        };
+    }, [id]);
+
+    // Tercer useEffect para manejar la actualización de la dedicación cuando viewTime cambie
+    console.log(user)
+    console.log("progress " + user.courses.find((course) => course.course.id === id)?.dedication);
+    useEffect(() => {
+        if (viewTime !== 0 && viewTime % 10 === 0) {
+            const updatedDedication = {
+                courseId: id,
+                dedication:user.courses.find((course) => course.course.id === id)?.dedication +  viewTime,
+            };
+
+
+            updateDedication(user.id, updatedDedication)
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    }, [viewTime, id, user]);
+
+    console.log(viewTime);
+    if (!course) return <h1>El curso no existe</h1>;
+    else {
         return (
             <Box className="container" sx={{ marginTop: 4 }}>
                 <Typography variant="h4" sx={{ marginBottom: 3 }}>{course.name}</Typography>
                 <Typography variant="body1" sx={{ marginBottom: 3 }}>{course.description}</Typography>
                 <Divider orientation='horizontal' flexItem />
-
-
                 <ViewOfContent content={course.content} test={course.tests} courseId={id} />
-
             </Box>
         );
     }

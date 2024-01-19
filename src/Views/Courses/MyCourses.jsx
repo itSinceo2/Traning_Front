@@ -1,7 +1,9 @@
 import { Avatar, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useAuthContext } from "../../Contexts/AuthContext";
 
+
 const MyCourses = () => {
+
 
     const { user } = useAuthContext()
 
@@ -13,6 +15,12 @@ const MyCourses = () => {
         return `${day}/${month}/${year}`
     }
 
+    const myDedicationToHours = (dedication) => {
+        const hours = Math.floor(dedication / 3600)
+        const minutes = Math.floor((dedication - (hours * 3600)) / 60)
+        const seconds = dedication - (hours * 3600) - (minutes * 60)
+        return `${hours}h ${minutes}m ${seconds}s`
+    }
 
 
 
@@ -28,6 +36,7 @@ const MyCourses = () => {
                                 <TableCell>Nombre</TableCell>
                                 <TableCell>Estado</TableCell>
                                 <TableCell>Fecha de inicio</TableCell>
+                                <TableCell>Progreso</TableCell>
                                 <TableCell>Accion</TableCell>
                             </TableRow>
                         </TableHead>
@@ -41,6 +50,7 @@ const MyCourses = () => {
                                     <TableCell>{course.course.name}</TableCell>
                                     <TableCell>{course.status}</TableCell>
                                     <TableCell>{DateFormat(course.startDate)}</TableCell>
+                                    <TableCell width={10}>{myDedicationToHours(course.dedication)}</TableCell>
                                     <TableCell>
                                         <Button variant="contained" color="primary" href={`/course/detail/${course.course.id}`}>Ver</Button>
                                     </TableCell>

@@ -14,3 +14,5 @@ export const deleteUser = (id) => http.delete(`/users/${id}`);
 export const updateUser = (id, user) => http.put(`/users/${id}`, user);
 
 export const updateTest = (id, user) => http.put(`/users/test/${id}`, user);
+
+export const updateDedication = (id, viewTime) => http.put(`/users/dedication/${id}`, viewTime);
