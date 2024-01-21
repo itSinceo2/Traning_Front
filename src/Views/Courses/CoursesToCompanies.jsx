@@ -12,6 +12,7 @@ import { useParams } from "react-router";
 import { getCourseDetail } from "../../Services/CoursesService";
 import { getClientsList, updateClient } from "../../Services/ClientsService";
 import AsignCourseTable from "../../Components/AsignCourseTable/AsignCourseTable";
+import { useCompanyContext } from "../../Contexts/CompanyContext";
 
 
 const CoursesToCompanies = () => {
@@ -19,6 +20,15 @@ const CoursesToCompanies = () => {
     const [course, setCourse] = useState({});
     const [companies, setCompanies] = useState([]);
     const [loading, setLoading] = useState(false);
+
+
+    const { company } = useCompanyContext();
+
+    console.log(company);
+
+
+
+
 
 
     useEffect(() => {
@@ -54,11 +64,11 @@ const CoursesToCompanies = () => {
         setCompanies([...companies]);
         console.log(companies);
     };
-    
+
 
     const handleupdate = () => {
         console.log("entra a handleupdate");
-    
+
         setLoading(true);
         companies.forEach((company) => {
             const coursesToSend = company.courses.map((c) => c.id);
@@ -72,14 +82,6 @@ const CoursesToCompanies = () => {
                 });
         });
     };
-    
-
-
-
-
-
-
-
 
 
     const columns = ["Seleccionar", "Nombre", "Email", "Telefono"];
