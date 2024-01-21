@@ -29,7 +29,7 @@ function Navbar() {
 
   switch (user.role) {
     case 'Administrador SinCeO2':
-      pages.push('Clientes', 'Cursos', 'Mis Cursos', 'Usuarios');
+      pages.push('Clientes', 'Cursos', 'Usuarios');
       break;
     case 'Administrador':
       pages.push('Mis Cursos', 'Usuarios');

@@ -17,6 +17,8 @@ const ViewOfContent = ({ content, test, courseId }) => {
     const [testResult, setTestResult] = useState();
     const { user: currentUser } = useAuthContext();
 
+ 
+
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -88,6 +90,7 @@ const ViewOfContent = ({ content, test, courseId }) => {
 
         updateTest(currentUser.id, body).then((data) => {
             console.log(data);
+            window.location.reload();
         }
         ).catch((error) => {
             console.log(error);

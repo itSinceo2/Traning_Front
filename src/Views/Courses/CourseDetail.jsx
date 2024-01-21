@@ -25,8 +25,6 @@ const CourseDetail = () => {
 
         fetchCourseDetail();
     }, [id]);
-
-    // Segundo useEffect para manejar el tiempo de visualización y actualizar la dedicación
     useEffect(() => {
         let timer;
 
@@ -41,9 +39,7 @@ const CourseDetail = () => {
         };
     }, [id]);
 
-    // Tercer useEffect para manejar la actualización de la dedicación cuando viewTime cambie
-    console.log(user)
-    console.log("progress " + user.courses.find((course) => course.course.id === id)?.dedication);
+
     useEffect(() => {
         if (viewTime !== 0 && viewTime % 10 === 0) {
             const updatedDedication = {
@@ -53,8 +49,8 @@ const CourseDetail = () => {
 
 
             updateDedication(user.id, updatedDedication)
-                .then((data) => {
-                    console.log(data);
+                .then(() => {
+                    console.log("updating the course");
                 })
                 .catch((error) => {
                     console.log(error);
@@ -62,7 +58,7 @@ const CourseDetail = () => {
         }
     }, [viewTime, id, user]);
 
-    console.log(viewTime);
+
     if (!course) return <h1>El curso no existe</h1>;
     else {
         return (
