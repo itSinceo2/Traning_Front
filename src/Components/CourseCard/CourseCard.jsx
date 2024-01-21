@@ -18,7 +18,13 @@ const CourseCard = ({ course, handleDeleteCourse, action, route }) => {
         <Typography gutterBottom variant="h5" component="div">
           {course.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" 
+        style={{
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+          WebkitLineClamp: 1,
+        }}>
           {course.description}
         </Typography>
       </CardContent>
