@@ -78,7 +78,7 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default function List({ rows, columns, headers }) {
+export default function List({ rows, columns, headers, onRowClick }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -117,7 +117,7 @@ export default function List({ rows, columns, headers }) {
                             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : rows
                         ).map((row) => (
-                            <TableRow key={row.id}>
+                            <TableRow key={row.id} hover onClick={() => onRowClick(row.id)}>
                                 {columns.map((column, index) => (
                                     <TableCell
                                         key={index}

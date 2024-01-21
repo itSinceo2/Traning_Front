@@ -3,10 +3,13 @@ import List from "../../Components/List/List";
 import { getClientsList } from "../../Services/ClientsService";
 import Search from "../../Components/Search/Search";
 import { Box, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router";
 
 const Clients = () => {
   const [clients, setClients] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getClientsList().then((response) => {
@@ -17,6 +20,12 @@ const Clients = () => {
   const handleSearch = (filteredOptions) => {
     setFilteredClients(filteredOptions);
   };
+
+  const handleRowClick = (clientId) => {
+
+    console.log(clientId);
+    navigate(`/clients/detail/${clientId}`);
+};
 
   return (
     !clients ?
@@ -38,6 +47,7 @@ const Clients = () => {
           rows={filteredClients?.length ? filteredClients : clients}
           columns={['name', 'courses.length', 'users.length']}
           headers={['Empresa', 'Cursos', 'Alumnos']}
+          onRowClick={handleRowClick}
         />
       </Box>
   );

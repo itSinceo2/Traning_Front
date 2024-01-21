@@ -12,7 +12,6 @@ import { useParams } from "react-router";
 import { getCourseDetail } from "../../Services/CoursesService";
 import { getClientsList, updateClient } from "../../Services/ClientsService";
 import AsignCourseTable from "../../Components/AsignCourseTable/AsignCourseTable";
-import { useCompanyContext } from "../../Contexts/CompanyContext";
 
 
 const CoursesToCompanies = () => {
@@ -22,9 +21,7 @@ const CoursesToCompanies = () => {
     const [loading, setLoading] = useState(false);
 
 
-    const { company } = useCompanyContext();
 
-    console.log(company);
 
 
 

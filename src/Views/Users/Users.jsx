@@ -5,6 +5,7 @@ import { Box, Button, Typography } from "@mui/material"
 import List from "../../Components/List/List"
 import Search from "../../Components/Search/Search";
 import { useAuthContext } from "../../Contexts/AuthContext"
+import { useNavigate } from "react-router"
 
 
 const Users = () => {
@@ -16,6 +17,8 @@ const Users = () => {
 
     const [users, setUsers] = useState([])
     const [filteredUsers, setFilteredUsers] = useState([])
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         getUsersList()
@@ -38,6 +41,11 @@ const Users = () => {
         setFilteredUsers(filteredOptions)
     }
 
+    const handleRowClick = (userId) => {
+
+        navigate(`/users/detail/${userId}`);
+    };
+
     return (
         !users ?
             <Box>Loading...</Box>
@@ -58,6 +66,7 @@ const Users = () => {
                         rows={filteredUsers?.length ? filteredUsers : users}
                         columns={['avatar', 'username', 'company.name', 'courses.length']}
                         headers={['Foto', 'Nombre', 'Empresa', 'Cursos']}
+                        onRowClick={handleRowClick}
                     />
                 </Box>
             </Box>
