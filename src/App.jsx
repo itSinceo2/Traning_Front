@@ -17,6 +17,7 @@ import Profile from './Views/Users/Profile'
 import UsersEditForm from './Views/Users/UsersEditForm'
 import CoursesToCompanies from './Views/Courses/CoursesToCompanies'
 import MyCourses from './Views/Courses/MyCourses'
+import ClientDetail from './Views/Clients/ClientDetail'
 
 
 
@@ -47,6 +48,7 @@ function App() {
             {/* Clients */}
             <Route path="/clients" element={<Clients />} />
             <Route path="/clients/new" element={<ClientsForm />} />
+            <Route path="/clients/detail/:id" element={<ClientDetail />} />
 
 
             {/* Courses */}

@@ -4,16 +4,21 @@ import { getClientsList } from "../../Services/ClientsService";
 import Search from "../../Components/Search/Search";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
+import { useCompanyContext } from "../../Contexts/CompanyContext";
 
 const Clients = () => {
   const [clients, setClients] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
 
   const navigate = useNavigate();
+  //company del contexto
+  const { company } = useCompanyContext();
 
   useEffect(() => {
     getClientsList().then((response) => {
-      setClients(response);
+      //mostrar las empresas diferentes a company
+      const clientsToShow = response.filter((client) => client.id !== company.id);
+      setClients(clientsToShow);
     });
   }, []);
 
