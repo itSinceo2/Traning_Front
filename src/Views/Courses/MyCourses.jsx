@@ -34,9 +34,9 @@ const MyCourses = () => {
                             <TableRow>
                                 <TableCell>Curso</TableCell>
                                 <TableCell>Nombre</TableCell>
-                                <TableCell>Estado</TableCell>
-                                <TableCell>Fecha de inicio</TableCell>
                                 <TableCell>Progreso</TableCell>
+                                <TableCell>Fecha de inicio</TableCell>
+                                <TableCell>Tiempo dedicado</TableCell>
                                 <TableCell>Accion</TableCell>
                             </TableRow>
                         </TableHead>
@@ -48,7 +48,7 @@ const MyCourses = () => {
 
                                     </TableCell>
                                     <TableCell>{course.course.name}</TableCell>
-                                    <TableCell>{course.status}</TableCell>
+                                    <TableCell>{course.progress.courseProgressPercent}%</TableCell>
                                     <TableCell>{DateFormat(course.startDate)}</TableCell>
                                     <TableCell width={10}>{myDedicationToHours(course.dedication)}</TableCell>
                                     <TableCell>

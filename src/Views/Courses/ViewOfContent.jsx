@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import { useState, useEffect } from 'react';
 import { Box, Card } from '@mui/material';
 import CourseTest from '../../Components/CourseTest/CourseTest';
-import { updateTest } from '../../Services/UsersService';
+import { updateProgress, updateTest } from '../../Services/UsersService';
 import { useAuthContext } from '../../Contexts/AuthContext';
 import CorrectAnswers from '../../Components/CourseTest/CorrectAnswers';
 import ErrorBoundary from '../../Components/ErrorBoundary/ErrorBoundary';
@@ -16,14 +16,45 @@ const ViewOfContent = ({ content, test, courseId }) => {
     const [selectedOptions, setSelectedOptions] = useState({});
     const [testResult, setTestResult] = useState();
     const { user: currentUser } = useAuthContext();
+    const [progress, setProgress] = useState({
+        courseId: courseId,
+        courseLength: 0,
+        courseProgress: 0,
+        courseProgressPercent: 0
 
- 
+    });
 
     const handleChange = (event, value) => {
-        setPage(value);
+        const currentProgress = currentUser.courses.find((course) => course.course.id === courseId)?.progress.courseProgress;
+        if (currentProgress && currentProgress < value) {
+            setProgress((prev) => ({
+                ...prev,
+                courseProgress: value,
+            }));
+        }
+        setProgress((prev) => ({
+            ...prev,
+            courseProgress:
+                prev.courseProgress > value ? prev.courseProgress : value,
+            courseProgressPercent: Number(((prev.courseProgress / prev.courseLength) * 100).toFixed(2)),
+        }));
+        console.log(currentProgress);
+        console.log(value);
+
+        console.log(progress);
+        updateProgress(currentUser.id, progress).
+        then(() => {
+            setPage(value);
+        }
+        ).catch((error) => {
+            console.log(error);
+        });
+
     };
 
     useEffect(() => {
+
+
         const fetchData = async () => {
             try {
                 const newArray = [];
@@ -37,6 +68,10 @@ const ViewOfContent = ({ content, test, courseId }) => {
                     }
                 });
                 setContentArray(newArray);
+                setProgress((prev) => ({
+                    ...prev,
+                    courseLength: newArray.length,
+                }));
             } catch (error) {
                 console.error(error);
             }
@@ -70,7 +105,6 @@ const ViewOfContent = ({ content, test, courseId }) => {
 
     }
 
-
     const handleTestSubmit = (event) => {
         event.preventDefault();
         result();
@@ -86,7 +120,6 @@ const ViewOfContent = ({ content, test, courseId }) => {
                 score: testResult
             }
         };
-        console.log(body);
 
         updateTest(currentUser.id, body).then((data) => {
             console.log(data);
@@ -108,9 +141,6 @@ const ViewOfContent = ({ content, test, courseId }) => {
         return false;
     };
 
-
-
-    //finding the score of the test from the user
     const findScore = (testEvaluate) => {
         for (const course of currentUser.courses) {
             for (const test of course.testsResults) {
@@ -121,7 +151,6 @@ const ViewOfContent = ({ content, test, courseId }) => {
         }
         return false;
     }
-
 
     if (!contentArray || contentArray.length === 0) {
         return (
@@ -143,10 +172,10 @@ const ViewOfContent = ({ content, test, courseId }) => {
                                 <Typography variant='body2'>a continuación se muestran las respuestas</Typography>
                                 <Box>
                                     <ErrorBoundary>
-                                <CorrectAnswers
-                                    questions={contentArray[page - 1].questions}
-                                />
-                                </ErrorBoundary>
+                                        <CorrectAnswers
+                                            questions={contentArray[page - 1].questions}
+                                        />
+                                    </ErrorBoundary>
                                 </Box>
                             </Box>
 
