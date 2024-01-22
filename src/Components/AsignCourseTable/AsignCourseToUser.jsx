@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Switch from '@mui/material/Switch';
 import Skeleton from '@mui/material/Skeleton';
+import { useState } from 'react';
 
 const label = { inputProps: { 'aria-label': 'Color switch demo' } };
 
@@ -40,10 +41,22 @@ const AsignCourseToUser = ({
     handleupdate,
     loading
 }) => {
+    const [changed, setChanged] = useState(false);
+
     const changeAndUpdaye = async (e, row) => {
+        console.log(userCourses)
         await handleChange(e, row);
-        await handleupdate();
+        setChanged(true);
     }
+    if (changed) {
+        console.log(userCourses)
+        handleupdate();
+        setChanged(false);
+    }
+    
+
+
+
 
 
     return (

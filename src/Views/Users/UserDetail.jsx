@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getUserDetail } from "../../Services/UsersService";
+import { getUserDetail, updateCourses } from "../../Services/UsersService";
 import { Avatar, Box, Card, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 import { getClientDetail } from "../../Services/ClientsService";
 import AsignCourseToUser from "../../Components/AsignCourseTable/AsignCourseToUser";
@@ -25,18 +25,22 @@ const UserDetail = () => {
     const handleChange = (e, row) => {
 
         if (userCourses.includes(row.id)) {
-            console.log("includes");
             setUserCourses(prevCourses => prevCourses.filter(id => id !== row.id));
         } else {
-            console.log("not includes");
             setUserCourses(prevCourses => [...prevCourses, row.id]);
         }
  
     };
-    console.log(userCourses);
+
 
     const handleupdate = () => {
-        console.log("click");
+        
+        updateCourses(id, { coursesId: userCourses })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => console.log(err));
+        
     }
 
     useEffect(() => {
