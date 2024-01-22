@@ -4,7 +4,6 @@ import { getUserDetail } from "../../Services/UsersService";
 import { Avatar, Box, Card, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 import { getClientDetail } from "../../Services/ClientsService";
 import AsignCourseToUser from "../../Components/AsignCourseTable/AsignCourseToUser";
-import { set } from "date-fns";
 
 const UserDetail = () => {
 
