@@ -20,7 +20,7 @@ const Clients = () => {
       const clientsToShow = response.filter((client) => client.id !== company.id);
       setClients(clientsToShow);
     });
-  }, []);
+  }, [company.id]);
 
   const handleSearch = (filteredOptions) => {
     setFilteredClients(filteredOptions);
