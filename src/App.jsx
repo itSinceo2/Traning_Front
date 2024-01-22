@@ -18,6 +18,7 @@ import UsersEditForm from './Views/Users/UsersEditForm'
 import CoursesToCompanies from './Views/Courses/CoursesToCompanies'
 import MyCourses from './Views/Courses/MyCourses'
 import ClientDetail from './Views/Clients/ClientDetail'
+import UserDetail from './Views/Users/UserDetail'
 
 
 
@@ -38,13 +39,13 @@ function App() {
 
   return (
     <ThemeProvider theme={customTheme}>
-        {!isAuthenticationFetched ? (
-          <h1>...loading</h1>
-          ) : (
-            
-            <Routes>
+      {!isAuthenticationFetched ? (
+        <h1>...loading</h1>
+      ) : (
+
+        <Routes>
           <Route path="/" element={<ProtectedRoute />}>
-            <Route path="/mycourses/:id" element={<MyCourses/>} />
+            <Route path="/mycourses/:id" element={<MyCourses />} />
             {/* Clients */}
             <Route path="/clients" element={<Clients />} />
             <Route path="/clients/new" element={<ClientsForm />} />
@@ -57,19 +58,21 @@ function App() {
             <Route path="/course/detail/:id" element={<CourseDetail />} />
             <Route path="/course/content/:id" element={<CoursesFormContent />} />
             <Route path="/course/asign/companies/:id" element={<CoursesToCompanies />} />
-            <Route path="/mycourses/:id" element={<MyCourses/>} />
+            <Route path="/mycourses/:id" element={<MyCourses />} />
 
 
 
             <Route path="/users" element={<Users />} />
-            <Route path="/users/new" element={<UsersForm/>} />
-            <Route path="/users/profile/:id" element={<Profile/>} />
-            <Route path="/users/edit/:id" element={<UsersEditForm/>} />
+            <Route path="/users/new" element={<UsersForm />} />
+            <Route path="/users/profile/:id" element={<Profile />} />
+            <Route path="/users/edit/:id" element={<UsersEditForm />} />
+            <Route path="/users/detail/:id" element={<UserDetail />} />
           </Route>
           <Route path="/login" element={<Login />} />
-      </Routes >
-        )
-}
+
+        </Routes >
+      )
+      }
     </ThemeProvider >
   )
 }

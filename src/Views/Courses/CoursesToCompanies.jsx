@@ -21,13 +21,6 @@ const CoursesToCompanies = () => {
     const [loading, setLoading] = useState(false);
 
 
-
-
-
-
-
-
-
     useEffect(() => {
         getCourseDetail(id)
             .then((data) => {
@@ -52,14 +45,12 @@ const CoursesToCompanies = () => {
     const handleChange = (event, row) => {
         if (event.target.checked) {
             row.courses = [...row.courses, course];
-            console.log(row.courses);
         } else {
             row.courses = row.courses.filter(
                 (c) => c.id !== course.id
             );
         }
         setCompanies([...companies]);
-        console.log(companies);
     };
 
 
