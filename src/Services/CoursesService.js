@@ -10,3 +10,4 @@ export const updateCourse = (id, course) => http.put(`/courses/${id}`, course);
 export const updateCourseContent = (id, content) =>
   http.put(`/courses/${id}/content`, content);
 export const updateCourseImage = (id, image) => http.put(`/courses/${id}/image`, image);
+export const updateCourseStudent = (id, student) =>  http.put(`/courses/${id}/updateStudent`, student);

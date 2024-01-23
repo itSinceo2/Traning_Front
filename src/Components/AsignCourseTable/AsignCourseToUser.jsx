@@ -39,26 +39,25 @@ const AsignCourseToUser = ({
     properties,
     handleChange,
     handleupdate,
+    handleStudentsChange,
+    handleStudentUpdate,
     loading
 }) => {
     const [changed, setChanged] = useState(false);
 
     const changeAndUpdaye = async (e, row) => {
-        console.log(userCourses)
+        await handleStudentsChange(e, row);
         await handleChange(e, row);
         setChanged(true);
     }
     if (changed) {
         console.log(userCourses)
         handleupdate();
+        handleStudentUpdate();
         setChanged(false);
+
     }
     
-
-
-
-
-
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">

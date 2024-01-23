@@ -4,6 +4,7 @@ import { getUserDetail, updateCourses } from "../../Services/UsersService";
 import { Avatar, Box, Card, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 import { getClientDetail } from "../../Services/ClientsService";
 import AsignCourseToUser from "../../Components/AsignCourseTable/AsignCourseToUser";
+import { updateCourseStudent } from "../../Services/CoursesService";
 
 const UserDetail = () => {
 
@@ -11,6 +12,7 @@ const UserDetail = () => {
     const [companyCourses, setCompanyCourses] = useState([]);
     const [companyName, setCompanyName] = useState('');
     const [userCourses, setUserCourses] = useState([]);
+    const [currentStudent, setCurrentStudent] = useState([]);
     const { id } = useParams();
 
 
@@ -32,16 +34,27 @@ const UserDetail = () => {
  
     };
 
+    const handleStudentsChange = (e, row) => {
+        setCurrentStudent(row.id)
+    }
+    const handleStudentUpdate = () => {
+
+        updateCourseStudent(currentStudent, { studentId: id, courseId: currentStudent})
+            .then(res => {
+                console.log(res.user.id);
+            })
+            .catch(err => console.log(err));
+    }
 
     const handleupdate = () => {
         
         updateCourses(id, { coursesId: userCourses })
             .then(res => {
-                console.log(res);
+                console.log(res.user.id);
             })
             .catch(err => console.log(err));
-        
     }
+
 
     useEffect(() => {
         getUserDetail(id).
@@ -101,6 +114,8 @@ const UserDetail = () => {
                     properties={["name", "description"]}
                     handleChange={handleChange}
                     handleupdate={handleupdate}
+                    handleStudentsChange={handleStudentsChange}
+                    handleStudentUpdate={handleStudentUpdate}
                     loading={false}
                 />
 
