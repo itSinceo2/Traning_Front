@@ -26,59 +26,58 @@ const ViewOfContent = ({ content, test, courseId }) => {
 
     const handleChange = (event, value) => {
         const currentProgress = currentUser.courses.find((course) => course.course.id === courseId)?.progress.courseProgress;
-        if (currentProgress && currentProgress < value) {
-            setProgress((prev) => ({
-                ...prev,
-                courseProgress: value,
-            }));
-        }
+    
         setProgress((prev) => ({
             ...prev,
             courseProgress:
-                prev.courseProgress > value ? prev.courseProgress : value,
-            courseProgressPercent: Number(((prev.courseProgress / prev.courseLength) * 100).toFixed(2)),
+                currentProgress > value ? currentProgress : value,
+            courseProgressPercent: Number(((currentProgress / prev.courseLength) * 100).toFixed(2)),
         }));
-        console.log(currentProgress);
-        console.log(value);
-
-        console.log(progress);
-        updateProgress(currentUser.id, progress).
-        then(() => {
+    
+        updateProgress(currentUser.id, {
+            courseId: courseId,
+            courseProgress: currentProgress > value ? currentProgress : value,
+            courseProgressPercent: Number(((currentProgress / progress.courseLength) * 100).toFixed(2)),
+        }).then(() => {
             setPage(value);
-        }
-        ).catch((error) => {
+        }).catch((error) => {
             console.log(error);
         });
-
     };
 
     useEffect(() => {
-
-
         const fetchData = async () => {
             try {
                 const newArray = [];
                 content?.forEach((contentItem) => {
                     const matchingTest = test.find((testItem) => contentItem.title === testItem.title);
                     if (matchingTest) {
-                        newArray.push(contentItem)
+                        newArray.push(contentItem);
                         newArray.push(matchingTest);
                     } else {
                         newArray.push(contentItem);
                     }
                 });
-                setContentArray(newArray);
-                setProgress((prev) => ({
-                    ...prev,
-                    courseLength: newArray.length,
-                }));
+    
+                if (newArray.length > 0) {
+                    setContentArray(newArray);
+    
+                    // Update progress only if it hasn't been set yet
+                    if (progress.courseLength === 0) {
+                        setProgress((prev) => ({
+                            ...prev,
+                            courseLength: newArray.length,
+                        }));
+                    }
+                }
             } catch (error) {
                 console.error(error);
             }
         };
-
+    
         fetchData();
-    }, [content, test]);
+    }, [content, test, progress.courseLength]);
+    
 
     const handleToggle = (questionId, optionId) => () => {
 

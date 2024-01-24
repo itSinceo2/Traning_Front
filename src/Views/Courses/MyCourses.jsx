@@ -1,5 +1,7 @@
 import { Avatar, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useAuthContext } from "../../Contexts/AuthContext";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import QuizIcon from '@mui/icons-material/Quiz';
 
 
 const MyCourses = () => {
@@ -51,8 +53,18 @@ const MyCourses = () => {
                                     <TableCell>{course.progress.courseProgressPercent}%</TableCell>
                                     <TableCell>{DateFormat(course.startDate)}</TableCell>
                                     <TableCell width={10}>{myDedicationToHours(course.dedication)}</TableCell>
-                                    <TableCell>
-                                        <Button variant="contained" color="primary" href={`/course/detail/${course.course.id}`}>Ver</Button>
+                                    <TableCell sx={{display:'flex', flexDirection:'row', gap:1}}>
+                                        <Button
+                                            variant="contained" color="primary" href={`/course/detail/${course.course.id}`}><RemoveRedEyeIcon/>
+                                        </Button>
+                                        {
+                                            course.progress.courseProgressPercent === 100 &&
+                                            <Button
+                                                variant="contained"
+                                                color="secondary"
+                                                href={`/course/exam/${course.course.id}`}
+                                            ><QuizIcon/></Button>
+                                        }
                                     </TableCell>
                                 </TableRow>
                             ))}

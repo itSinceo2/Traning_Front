@@ -19,6 +19,7 @@ import CoursesToCompanies from './Views/Courses/CoursesToCompanies'
 import MyCourses from './Views/Courses/MyCourses'
 import ClientDetail from './Views/Clients/ClientDetail'
 import UserDetail from './Views/Users/UserDetail'
+import Exam from './Views/Courses/Exam'
 
 
 
@@ -59,6 +60,7 @@ function App() {
             <Route path="/course/content/:id" element={<CoursesFormContent />} />
             <Route path="/course/asign/companies/:id" element={<CoursesToCompanies />} />
             <Route path="/mycourses/:id" element={<MyCourses />} />
+            <Route path="/course/exam/:id" element={<Exam />} />
 
 
 
