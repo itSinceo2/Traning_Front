@@ -20,3 +20,5 @@ export const updateDedication = (id, viewTime) => http.put(`/users/dedication/${
 export const updateProgress = (id, body) => http.put(`/users/progress/${id}`, body);
 
 export const updateCourses = (id, body) => http.put(`/users//updatingcourses/${id}`, body);
+
+export const updateExam = (id, body) => http.put(`/users/examresults/${id}`, body);
