@@ -1,10 +1,11 @@
-import { Box, Button, TextField, Typography, TextareaAutosize } from "@mui/material";
+import { Box, Button, TextField, Typography} from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { createCourse } from "../../Services/CoursesService";
 import { useTheme } from "@mui/system";
+import TextFormat from "../../Components/TextFormat/TextFormat";
 
 
 const VisuallyHiddenInput = styled("input")({
@@ -36,6 +37,14 @@ const CoursesForm = () => {
         });
     };
 
+    const handleEditorChange = (content) => {
+        console.log('entraaaaa');
+        setCourse({
+            ...course,
+            description: content,
+        });
+    };
+
     const handleInputChange = (event) => {
         setCourse({
             ...course,
@@ -62,10 +71,6 @@ const CoursesForm = () => {
             });
     };
 
-
-
-
-
     return (
         <form onSubmit={handleSubmit} style={{ maxWidth: "80vh" }} encType="multipart/form-data" multiple={true}>
             <Box sx={{ margin: 2, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
@@ -79,15 +84,12 @@ const CoursesForm = () => {
                         label="Name"
                         variant="outlined"
                     />
-                    <TextareaAutosize
-                        minRows={3}
-                        maxRows={10}
+                    <TextFormat
                         name="description"
-                        onChange={handleInputChange}
-                        id="outlined-basic"
-                        label="Description"
-                        variant="outlined"
+                        handleChange ={handleEditorChange}
+                        initialValue='<h3>Reemplace este texto por la descripción del curso</h3>'
                     />
+
                     <Button
                         component="label"
                         variant="contained"
@@ -101,7 +103,6 @@ const CoursesForm = () => {
                                     files: e.target.files,
                                 },
                             })}
-                            name="mainImage"
                             type="file"
                             multiple />
                     </Button>
