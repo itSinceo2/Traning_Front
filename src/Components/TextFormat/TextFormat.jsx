@@ -2,12 +2,12 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useRef } from "react";
 
 
-const TextFormat = ({ initialValue, handleChange  }) => {
+const TextFormat = ({ name, initialValue, handleChange  }) => {
     const editorRef = useRef(null);
 
     const handleEditorChange = () => {
         if (handleChange) {
-            handleChange(editorRef.current.getContent());
+            handleChange(editorRef.current.getContent(), name);
         }
     };
     return (

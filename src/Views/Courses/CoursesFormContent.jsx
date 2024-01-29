@@ -23,9 +23,6 @@ const CoursesFormContent = () => {
 
 
     useEffect(() => {
-        console.log("Effect triggered after course update");
-      
-        // Coloca la llamada a getCourseDetail dentro de una función asincrónica
         const fetchData = async () => {
           try {
             const data = await getCourseDetail(id);
@@ -35,10 +32,12 @@ const CoursesFormContent = () => {
           }
         };
       
-        fetchData(); // Llama a la función fetchData directamente
+        fetchData(); 
       
       }, [id]);
       
+
+
 
       const addContent = async (e) => {
         e.preventDefault();

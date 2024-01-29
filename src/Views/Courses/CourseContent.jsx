@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Box, Button, TextField, TextareaAutosize } from "@mui/material";
+import { Box, Button, TextField} from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
+import TextFormat from '../../Components/TextFormat/TextFormat';
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -27,6 +28,8 @@ const CourseContent = ({ onChange }) => {
     onChange(event);
   };
 
+  console.log(file);
+
   return (
     <Box sx={{ width: '100%', marginTop: 2 }}>
       <TextField
@@ -37,17 +40,13 @@ const CourseContent = ({ onChange }) => {
         variant="outlined"
         sx={{ width: '100%' }}
       />
-      <TextareaAutosize
-        minRows={3}
-        maxRows={10}
+      <TextFormat
         name='description'
         onChange={(event) => onChange(event)}
         id="outlined-basic"
-        label="Descripción"
+        label="Descripcion de seccion"
         variant="outlined"
-        aria-label="Textarea"
-        placeholder="Descripción de la seccion"
-        style={{ width: "100%", fontFamily: "Roboto" }}
+        sx={{ width: '100%' }}
       />
       <Button
         component="label"

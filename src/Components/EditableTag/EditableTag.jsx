@@ -1,8 +1,9 @@
-import { Box, Button, TextareaAutosize } from '@mui/material';
+import { Box, Button} from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import TextFormat from '../TextFormat/TextFormat';
 
 
 
@@ -52,7 +53,7 @@ const EditableTag = ({ typeOfTag, initialValue, onUpdate, name, index, editImage
     case "description":
       inputComponent = (
         <form action='submit'>
-          <TextareaAutosize
+          <TextFormat
             name={name}
             value={value}
             onChange={handleChange}

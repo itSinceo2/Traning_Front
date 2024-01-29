@@ -10,6 +10,8 @@ const Login = () => {
     const { login, user } = useAuthContext();
     const navigate = useNavigate();
 
+
+
     const [method, setMethod] = useState('email');
     const formik = useFormik({
         initialValues: {
@@ -30,8 +32,10 @@ const Login = () => {
                 .required('Password is required'),
         }),
         onSubmit: (values, helpers) => {
+            console.log(values);
             loginRequest(values)
                 .then((res) => {
+                    console.log(res);
                     login(res.access_token, () => navigate(`/mycourses/${user.id}`))
                 })
                 .catch((err) => {

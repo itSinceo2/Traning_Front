@@ -6,27 +6,23 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import TextFormatToShowInCard from '../TextFormat/TextFormatToShowInCard';
 
 
 const CourseCard = ({ course, handleDeleteCourse, action, route }) => {
 
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia sx={{ height: 140 }} image={course.mainImage} title={course.title} />
+    <Card sx={{ maxWidth: 300 }}>
+      <CardMedia sx={{ height: 140 }} image={course?.mainImage ? course?.mainImage : 'https://res.cloudinary.com/dv7hswrot/image/upload/v1606988059/avatar/avatar_cugq40.png' } title={course.title} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {course.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" 
-        style={{
-          display: '-webkit-box',
-          WebkitBoxOrient: 'vertical',
-          overflow: 'hidden',
-          WebkitLineClamp: 1,
-        }}>
-          {course.description}
-        </Typography>
+
+
+          <TextFormatToShowInCard htmlContent={course.description}/>
+
       </CardContent>
       <CardActions>
         <Button href={route}>{action}</Button>

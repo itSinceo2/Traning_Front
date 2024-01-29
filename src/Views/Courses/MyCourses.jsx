@@ -47,28 +47,28 @@ const MyCourses = () => {
                                 <TableRow key={course._id}>
                                     <TableCell>
                                         <Avatar src={course.course.mainImage} name={course.course.name} />
-
                                     </TableCell>
                                     <TableCell>{course.course.name}</TableCell>
                                     <TableCell>{course.progress.courseProgressPercent}%</TableCell>
                                     <TableCell>{DateFormat(course.startDate)}</TableCell>
-                                    <TableCell width={10}>{myDedicationToHours(course.dedication)}</TableCell>
-                                    <TableCell sx={{display:'flex', flexDirection:'row', gap:1}}>
-                                        <Button
-                                            variant="contained" color="primary" href={`/course/detail/${course.course.id}`}><RemoveRedEyeIcon/>
-                                        </Button>
-                                        {
-                                            course.progress.courseProgressPercent === 100 &&
-                                            <Button
-                                                variant="contained"
-                                                color="secondary"
-                                                href={`/course/exam/${course.course.id}`}
-                                            ><QuizIcon/></Button>
-                                        }
+                                    <TableCell >{myDedicationToHours(course.dedication)}</TableCell>
+                                    <TableCell >
+                                        <Box>
+                                        <Button sx={{margin:1}} variant="contained" color="primary" href={`/course/detail/${course.course.id}`}>
+                                            <RemoveRedEyeIcon />
+                                        </Button >
+                                        {course.progress.courseProgressPercent === 100 ? (
+                                            <Button sx={{margin:1}} variant="contained" color="secondary" href={`/course/exam/${course.course.id}`}>
+                                                <QuizIcon />
+                                            </Button>
+                                        ) : null}
+                                        </Box>
                                     </TableCell>
+
                                 </TableRow>
                             ))}
                         </TableBody>
+
                     </Table>
                 </TableContainer>
 

@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardMedia } from '@mui/material';
-import TextFormatToShow from '../TextFormat/TextFormatToShow';
+import TextFormatToShowInCard from '../TextFormat/TextFormatToShowInCard';
 
 const CourseHeader = ( {title, description, image}) => {
 
@@ -14,7 +14,7 @@ const CourseHeader = ( {title, description, image}) => {
           <Typography component="div" variant="h5">
             {title}
           </Typography>
-          <TextFormatToShow htmlContent={description} />
+          <TextFormatToShowInCard htmlContent={description} />
         </CardContent>
       </Box>
       <CardMedia

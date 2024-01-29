@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
@@ -30,18 +30,19 @@ const CoursesForm = () => {
     const theme = useTheme();
     const navigate = useNavigate();
 
-    const handleFileChange = (event) => {
+    const handleFileChange = (event, fieldName) => {
         setCourse({
             ...course,
-            [event.target.name]: event.target.files[0],
+            [fieldName]: event.target.files[0],
         });
     };
 
-    const handleEditorChange = (content) => {
-        console.log('entraaaaa');
+    const handleEditorChange = (content, name) => {
+
+        name = 'description';
         setCourse({
             ...course,
-            description: content,
+            [name]: content,
         });
     };
 
@@ -52,24 +53,29 @@ const CoursesForm = () => {
         });
     };
 
+    console.log(course);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+    
         const formData = new FormData();
         formData.append("name", course.name);
         formData.append("description", course.description);
-        formData.append("mainImage", course.mainImage);
-
+    
+        // Verificar si course.mainImage no es nulo antes de agregarlo al FormData
+        if (course.mainImage) {
+            formData.append("mainImage", course.mainImage);
+        }
+    
         createCourse(formData)
             .then((response) => {
-                console.log(response)
                 navigate(`/course/content/${response.id}`);
             })
             .catch((error) => {
                 console.error(error);
             });
     };
+    
 
     return (
         <form onSubmit={handleSubmit} style={{ maxWidth: "80vh" }} encType="multipart/form-data" multiple={true}>
@@ -86,8 +92,8 @@ const CoursesForm = () => {
                     />
                     <TextFormat
                         name="description"
-                        handleChange ={handleEditorChange}
-                        initialValue='<h3>Reemplace este texto por la descripción del curso</h3>'
+                        handleChange={handleEditorChange}
+                        initialValue='<p>Reemplace este texto por la descripción del curso</p>'
                     />
 
                     <Button
@@ -98,12 +104,8 @@ const CoursesForm = () => {
                     >
                         Imagen de portada
                         <VisuallyHiddenInput
-                            onChange={(e) => handleFileChange(e, {
-                                target: {
-                                    files: e.target.files,
-                                },
-                            })}
                             type="file"
+                            onChange={(e) => handleFileChange(e, "mainImage")}
                             multiple />
                     </Button>
 
