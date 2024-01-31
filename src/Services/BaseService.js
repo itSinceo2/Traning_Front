@@ -4,8 +4,12 @@ import axios from 'axios';
 import { getAccessToken, logout } from '../Stores/AccessTokenStore';
 
 const createHttp = (useAccessToken = false) => {
+  // const http = axios.create({
+  //   baseURL:"https://traning-back-dev-brjs.3.us-1.fl0.io"
+  // });
+
   const http = axios.create({
-    baseURL:"https://traning-back-dev-brjs.3.us-1.fl0.io/"
+    baseURL: "http://localhost:3000",
   });
 
 
