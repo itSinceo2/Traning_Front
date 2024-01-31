@@ -5,9 +5,10 @@ import { getAccessToken, logout } from '../Stores/AccessTokenStore';
 
 const createHttp = (useAccessToken = false) => {
   const http = axios.create({
-    baseURL:  import.meta.env.VITE_API_URL || 'http://localhost:3000',
+    baseURL:"https://traning-back-dev-brjs.3.us-1.fl0.io"
   });
-  console.log(import.meta.env.VITE_API_URL)
+
+
 
   if (useAccessToken) {
     http.interceptors.request.use((config) => {
@@ -22,7 +23,10 @@ const createHttp = (useAccessToken = false) => {
   }
 
   http.interceptors.response.use(
-    (response) => response.data,
+    (response) => {
+      console.log(response);
+      response.data
+    },
     (error) => {
       if (
         error?.response?.status &&
