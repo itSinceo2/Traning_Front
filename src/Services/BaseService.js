@@ -5,7 +5,7 @@ import { getAccessToken, logout } from '../Stores/AccessTokenStore';
 
 const createHttp = (useAccessToken = false) => {
   const http = axios.create({
-    baseURL:"https://traning-back-dev-brjs.3.us-1.fl0.io"
+    baseURL:"https://traning-back-dev-brjs.3.us-1.fl0.io/"
   });
 
 
