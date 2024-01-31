@@ -23,10 +23,7 @@ const createHttp = (useAccessToken = false) => {
   }
 
   http.interceptors.response.use(
-    (response) => {
-      console.log(response);
-      response.data
-    },
+    (response) => response.data,
     (error) => {
       if (
         error?.response?.status &&
