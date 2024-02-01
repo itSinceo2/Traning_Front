@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, TextField} from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import TextFormat from '../../Components/TextFormat/TextFormat';
@@ -16,9 +16,12 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
+
+
 const CourseContent = ({ onChange }) => {
 
   const [file, setFile] = useState(null);
+
 
 
 
@@ -28,7 +31,6 @@ const CourseContent = ({ onChange }) => {
     onChange(event);
   };
 
-  console.log(file);
 
   return (
     <Box sx={{ width: '100%', marginTop: 2 }}>
@@ -42,7 +44,8 @@ const CourseContent = ({ onChange }) => {
       />
       <TextFormat
         name='description'
-        onChange={(event) => onChange(event)}
+        initialValue='Contenido de seccion'
+        handleChange={(content, name) => onChange({ target: { name, value: content } })}
         id="outlined-basic"
         label="Descripcion de seccion"
         variant="outlined"

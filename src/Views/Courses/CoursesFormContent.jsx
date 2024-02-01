@@ -5,6 +5,7 @@ import { Box, Button, Card, Divider } from "@mui/material";
 import CourseContent from "./CourseContent";
 import CourseHeader from "../../Components/CourseHeader/CourseHeader";
 import EditableTag from "../../Components/EditableTag/EditableTag";
+import TextFormatToShowInCourseContent from "../../Components/TextFormat/TextFormatToShowInCourseContent";
 
 
 const CoursesFormContent = () => {
@@ -56,6 +57,7 @@ const CoursesFormContent = () => {
 
     const handleAddContent = (event) => {
         const { name, value, files } = event.target;
+        console.log(name, value, files)
 
         name === "image" ?
             setContentList({
@@ -67,6 +69,8 @@ const CoursesFormContent = () => {
                 [name]: value,
             });
     };
+
+    console.log(contentList)
 
     const editTag = (e, index) => {
 
@@ -171,14 +175,11 @@ const CoursesFormContent = () => {
                                 />
                                 </Box>
                                 <Box>
-                                <EditableTag
-                                    index={index}
-                                    name="description"
-                                    sx={{ marginBottom: 1 }}
-                                    typeOfTag={"body2"}
-                                    initialValue={content.description ? content.description : ""}
-                                    onUpdate={editTag}
-                                />
+                                    <TextFormatToShowInCourseContent 
+                                        htmlContent={content.description ? content.description : ""}
+                                        typeOfTag={"body2"}
+                                    />
+
                                 </Box>
                                 <Box>
                                 <EditableTag

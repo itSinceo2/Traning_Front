@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import TextFormat from '../TextFormat/TextFormat';
 
 
 
@@ -25,6 +24,7 @@ const EditableTag = ({ typeOfTag, initialValue, onUpdate, name, index, editImage
   const handleChange = (e) => {
     setValue(e.target.value);
   };
+
 
   const handleImageChange = (e) => {
     e.preventDefault()
@@ -50,19 +50,7 @@ const EditableTag = ({ typeOfTag, initialValue, onUpdate, name, index, editImage
         </form>
       );
       break;
-    case "description":
-      inputComponent = (
-        <form action='submit'>
-          <TextFormat
-            name={name}
-            value={value}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            autoFocus
-          />
-        </form>
-      );
-      break;
+
     case "image":
       inputComponent = (
         <form action="submit" encType="multipart/form-data">
